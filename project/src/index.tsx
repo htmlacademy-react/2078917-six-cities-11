@@ -6,12 +6,10 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-const Setting = {
-  offersNumber: 3,
-} as const;
+const OFFERS_NUMBER = 3;
 
 root.render(
   <React.StrictMode>
-    <App offersNumber = {Setting.offersNumber}/>
+    <App offersNumber={OFFERS_NUMBER}/>
   </React.StrictMode>,
 );
