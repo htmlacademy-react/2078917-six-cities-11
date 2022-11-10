@@ -6,8 +6,10 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
+const OFFERS_NUMBER = 3;
+
 root.render(
   <React.StrictMode>
-    <App />
+    <App offersNumber={OFFERS_NUMBER}/>
   </React.StrictMode>,
 );
