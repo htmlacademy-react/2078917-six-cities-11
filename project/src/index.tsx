@@ -1,6 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
+import { Routes } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import NotFound from './pages/not-found/not-found';
+import Login from './pages/login/login';
+import Favorites from './pages/favorites/favorites';
+import Property from './pages/property/property';
+import { AppRoutes, AuthorizationStatuses } from './constants';
+import PrivateRoute from './components/private-route/private-route';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -9,7 +19,36 @@ const root = ReactDOM.createRoot(
 const OFFERS_NUMBER = 3;
 
 root.render(
-  <React.StrictMode>
-    <App offersNumber={OFFERS_NUMBER}/>
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Routes>
+      <Route
+        path={AppRoutes.Root}
+        element={<App offersNumber={OFFERS_NUMBER} />}
+      />
+      <Route
+        path={AppRoutes.Login}
+        element={<Login/>}
+      />
+      <Route
+        path={AppRoutes.Favorites}
+        element={
+          <PrivateRoute
+            authorizationStatus={AuthorizationStatuses.Auth}
+          >
+            <Favorites />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path={AppRoutes.Offer}
+        element={<Property/>}
+      />
+      <Route
+        path='*'
+        element={<NotFound/>}
+      />
+    </Routes>
+  </BrowserRouter>
+
+
 );
