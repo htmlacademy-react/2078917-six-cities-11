@@ -4,11 +4,11 @@ import App from './components/app/app';
 import { Routes } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
-import NotFound from './pages/not-Found/not-found';
+import NotFound from './pages/not-found/not-found';
 import Login from './pages/login/login';
 import Favorites from './pages/favorites/favorites';
 import Property from './pages/property/property';
-import { AppRoute, AuthorizationStatus } from './const';
+import { AppRoutes, AuthorizationStatuses } from './constants';
 import PrivateRoute from './components/private-route/private-route';
 
 
@@ -22,25 +22,25 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route
-        path={AppRoute.Root}
+        path={AppRoutes.Root}
         element={<App offersNumber={OFFERS_NUMBER} />}
       />
       <Route
-        path={AppRoute.Login}
+        path={AppRoutes.Login}
         element={<Login/>}
       />
       <Route
-        path={AppRoute.Favorites}
+        path={AppRoutes.Favorites}
         element={
           <PrivateRoute
-            authorizationStatus={AuthorizationStatus.Auth}
+            authorizationStatus={AuthorizationStatuses.Auth}
           >
             <Favorites />
           </PrivateRoute>
         }
       />
       <Route
-        path={AppRoute.Offer}
+        path={AppRoutes.Offer}
         element={<Property/>}
       />
       <Route
