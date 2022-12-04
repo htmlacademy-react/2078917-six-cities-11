@@ -1,12 +1,16 @@
-import CityCard from '../../components/city-card/city-card';
+import OfferList from '../../components/offer-list/offer-list';
 import Logo from '../../components/logo/logo';
 import { Link } from 'react-router-dom';
+import { Offer } from '../../types/offer';
+import { useState } from 'react';
 
 type MainPageProps = {
   offersNumber: number;
+  offers: Offer[];
 };
 
-function MainPage({ offersNumber }: MainPageProps): JSX.Element {
+function MainPage({ offersNumber, offers }: MainPageProps): JSX.Element {
+  const [selectedCard, setActiveCard] = useState(0);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -43,7 +47,7 @@ function MainPage({ offersNumber }: MainPageProps): JSX.Element {
             <ul className="locations__list tabs__list">
               <li className="locations__item">
                 <a className="locations__item-link tabs__item" href="/">
-                  <span>Paris</span>
+                  <span>Paris ({selectedCard})</span>
                 </a>
               </li>
               <li className="locations__item">
@@ -95,11 +99,7 @@ function MainPage({ offersNumber }: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CityCard />
-                <CityCard />
-                <CityCard />
-                <CityCard />
-                <CityCard />
+                <OfferList {...{ offers, setActiveCard}} />
               </div>
             </section>
             <div className="cities__right-section">
