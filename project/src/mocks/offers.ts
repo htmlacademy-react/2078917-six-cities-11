@@ -1,52 +1,5 @@
 import { Offer } from '../types/offer';
 import { reviews } from './reviews';
-import { getRandomItem, getRandomNumber } from './utils';
-
-const titles : string[] = [
-  'Nice, cozy, warm big bed apartment',
-  'Wood and stone place',
-  'Beautiful &amp; luxurious apartment at great location',
-  'Canal View Prinsengracht'
-];
-
-const descriptions: string[] = [
-  'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-  'An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.'
-];
-
-
-const propertyTypes: string[] = [
-  'Apartment',
-  'Private room'
-];
-
-const avatars: string[] = [
-  'avatar-angelina.jpg',
-  'avatar-max.jpg'
-];
-
-const names: string[] = [
-  'Max',
-  'Angelina',
-  'Josh',
-  'Jose',
-  'Harry',
-  'Angelina'
-];
-
-const facilities: string[] = [
-  'Wi - Fi',
-  'Washing machine',
-  'Towels',
-  'Heating',
-  'Coffee machine',
-  'Baby seat',
-  'Kitchen',
-  'Dishwasher',
-  'Cabel TV',
-  'Fridge'
-];
-
 
 export const offers: Offer[] = [
   {
@@ -59,99 +12,126 @@ export const offers: Offer[] = [
       'studio-01.jpg',
       'apartment-01.jpg'
     ],
-    title: getRandomItem(titles),
-    description: getRandomItem(descriptions),
-    isPremium: getRandomNumber(0, 1) === 1,
-    type: getRandomItem(propertyTypes),
-    rating: getRandomNumber(0,5),
-    bedroomNumber: getRandomNumber(1,4),
-    guests: getRandomNumber(1, 4),
-    price: getRandomNumber(10, 400),
+    title: 'Nice, cozy, warm big bed apartment',
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
+    isPremium: true,
+    type: 'Apartment',
+    rating: 5,
+    bedroomNumber: 3,
+    guests: 2,
+    price: 500,
     hostInfo: {
-      avatar: getRandomItem(avatars),
-      name: getRandomItem(names),
-      isPro: getRandomNumber(0, 1) === 1,
+      avatar: 'avatar-angelina.jpg',
+      name: 'Angelina',
+      isPro: true,
     },
-    facilities: facilities,
+    facilities: [
+      'Wi - Fi',
+      'Washing machine',
+      'Towels',
+      'Heating',
+      'Dishwasher',
+      'Cabel TV',
+      'Fridge'
+    ],
     reviews: reviews
   },
   {
     id: 1,
     photos: [
       'room.jpg',
-      'apartment-01.jpg',
-      'apartment-02.jpg',
       'apartment-03.jpg',
+      'apartment-02.jpg',
+      'apartment-01.jpg',
       'studio-01.jpg',
       'apartment-01.jpg'
     ],
-    title: getRandomItem(titles),
-    description: getRandomItem(descriptions),
-    isPremium: getRandomNumber(0, 1) === 1,
-    type: getRandomItem(propertyTypes),
-    rating: getRandomNumber(1, 10),
-    bedroomNumber: getRandomNumber(1, 4),
-    guests: getRandomNumber(1, 4),
-    price: getRandomNumber(10, 400),
+    title: 'Wood and stone place',
+    description: 'An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.',
+    isPremium: false,
+    type: 'Apartment',
+    rating: 4,
+    bedroomNumber: 2,
+    guests: 2,
+    price: 1500,
     hostInfo: {
-      avatar: getRandomItem(avatars),
-      name: getRandomItem(names),
-      isPro: getRandomNumber(0, 1) === 1,
+      avatar: 'avatar- max.jpg',
+      name: 'Max',
+      isPro: false,
     },
-    facilities: facilities,
+    facilities: [
+      'Heating',
+      'Coffee machine',
+      'Baby seat',
+      'Kitchen',
+      'Dishwasher'
+    ],
     reviews: reviews
   },
   {
     id: 2,
     photos: [
       'room.jpg',
-      'apartment-01.jpg',
-      'apartment-02.jpg',
       'apartment-03.jpg',
+      'apartment-02.jpg',
+      'apartment-01.jpg',
       'studio-01.jpg',
       'apartment-01.jpg'
     ],
-    title: getRandomItem(titles),
-    description: getRandomItem(descriptions),
-    isPremium: getRandomNumber(0, 1) === 1,
-    type: getRandomItem(propertyTypes),
-    rating: getRandomNumber(1, 10),
-    bedroomNumber: getRandomNumber(1, 4),
-    guests: getRandomNumber(1, 4),
-    price: getRandomNumber(10, 400),
+    title: 'Canal View Prinsengracht',
+    description: 'An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.',
+    isPremium: false,
+    type: 'Apartment',
+    rating: 3,
+    bedroomNumber: 7,
+    guests: 7,
+    price: 11500,
     hostInfo: {
-      avatar: getRandomItem(avatars),
-      name: getRandomItem(names),
-      isPro: getRandomNumber(0, 1) === 1,
+      avatar: 'avatar-max.jpg',
+      name: 'Max',
+      isPro: true,
     },
-    facilities: facilities,
+    facilities: [
+      'Wi - Fi',
+      'Washing machine',
+      'Towels',
+      'Heating',
+      'Coffee machine',
+      'Baby seat',
+      'Kitchen',
+      'Dishwasher',
+      'Cabel TV',
+      'Fridge'
+    ],
     reviews: reviews
   },
   {
     id: 3,
     photos: [
       'room.jpg',
-      'apartment-01.jpg',
       'apartment-02.jpg',
       'apartment-03.jpg',
+      'apartment-01.jpg',
       'studio-01.jpg',
       'apartment-01.jpg'
     ],
-    title: getRandomItem(titles),
-    description: getRandomItem(descriptions),
-    isPremium: getRandomNumber(0, 1) === 1,
-    type: getRandomItem(propertyTypes),
-    rating: getRandomNumber(1, 10),
-    bedroomNumber: getRandomNumber(1, 4),
-    guests: getRandomNumber(1, 4),
-    price: getRandomNumber(10, 400),
+    title: 'Beautiful &amp; luxurious apartment at great location',
+    description: 'An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.',
+    isPremium: true,
+    type: 'Private room',
+    rating: 1,
+    bedroomNumber: 1,
+    guests: 1,
+    price: 100,
     hostInfo: {
-      avatar: getRandomItem(avatars),
-      name: getRandomItem(names),
-      isPro: getRandomNumber(0, 1) === 1,
+      avatar: 'avatar-max.jpg',
+      name: 'Harry',
+      isPro: false,
     },
-    facilities: facilities,
+    facilities: [
+      'Wi - Fi'
+    ],
     reviews: reviews
-  }
+  },
 ];
 

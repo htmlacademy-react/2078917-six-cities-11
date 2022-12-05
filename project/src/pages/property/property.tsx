@@ -47,8 +47,15 @@ function Property({ offers }: OfferProps): JSX.Element {
               {photos.map((url, count)=>{
                 const keyValue = `${url}${count}`;
                 return (
-                  <div key={keyValue} className="property__image-wrapper">
-                    <img className="property__image" src={`img/${url}`} alt="Photostudio" />
+                  <div
+                    key={keyValue}
+                    className="property__image-wrapper"
+                  >
+                    <img
+                      className="property__image"
+                      src={`img/${url}`}
+                      alt="Photostudio"
+                    />
                   </div>
                 );
               })}
@@ -98,23 +105,30 @@ function Property({ offers }: OfferProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {
-                    facilities.map((facility, count)=>{
-                      const keyValue = `${facility}-${count}`;
-                      return(
-                        <li key={keyValue} className="property__inside-item">
-                          {facility}
-                        </li>
-                      );
-                    })
-                  }
+                  {facilities.map((facility, count)=>{
+                    const keyValue = `${facility}-${count}`;
+                    return(
+                      <li
+                        key={keyValue}
+                        className="property__inside-item"
+                      >
+                        {facility}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img
+                      className="property__avatar user__avatar"
+                      src="img/avatar-angelina.jpg"
+                      width="74"
+                      height="74"
+                      alt="Host avatar"
+                    />
                   </div>
                   <span className="property__user-name">
                     Angelina
@@ -139,10 +153,19 @@ function Property({ offers }: OfferProps): JSX.Element {
                     reviews.map((review, count)=>{
                       const keyValue = `${review.id}-count`;
                       return(
-                        <li key={keyValue} className="reviews__item">
+                        <li
+                          key={keyValue}
+                          className="reviews__item"
+                        >
                           <div className="reviews__user user">
                             <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                              <img className="reviews__avatar user__avatar" src={`img/${review.avatar}`} width="54" height="54" alt="Reviews avatar" />
+                              <img
+                                className="reviews__avatar user__avatar"
+                                src={`img/${review.avatar}`}
+                                width="54"
+                                height="54"
+                                alt="Reviews avatar"
+                              />
                             </div>
                             <span className="reviews__user-name">
                               Max
@@ -158,7 +181,12 @@ function Property({ offers }: OfferProps): JSX.Element {
                             <p className="reviews__text">
                               {review.text}
                             </p>
-                            <time className="reviews__time" dateTime="2019-04-24">{review.date}</time>
+                            <time
+                              className="reviews__time"
+                              dateTime="2019-04-24"
+                            >
+                              {review.date}
+                            </time>
                           </div>
                         </li>
                       );

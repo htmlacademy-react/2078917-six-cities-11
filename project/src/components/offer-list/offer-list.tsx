@@ -11,7 +11,7 @@ function OfferList({ offers, setActiveCard }: OfferProps): JSX.Element {
     <>
       {offers.map(
         (offer, id) => {
-          const keyValue = `${id}`;
+          const keyValue = id;
           return (
             <PropertyCard
               key={keyValue}

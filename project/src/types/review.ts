@@ -3,6 +3,6 @@ export type Review = {
   avatar: string;
   name: string;
   mark: number;
-  date: number;
+  date: string;
   text: string;
 };

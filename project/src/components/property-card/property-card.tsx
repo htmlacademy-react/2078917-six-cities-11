@@ -1,6 +1,5 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
-import { getRandomItem } from '../../mocks/utils';
 
 type OfferProps = {
   offer: Offer;
@@ -11,10 +10,24 @@ function PropertyCard({ offer, setActiveCard}: OfferProps ): JSX.Element {
   const { id, photos, title, type, rating, price } = offer;
 
   return (
-    <article className="cities__card place-card" onMouseOver={() => { setActiveCard && setActiveCard(offer.id); }}>
+    <article
+      className="cities__card place-card"
+      onMouseOver={() => {
+        if (setActiveCard)
+        {
+          setActiveCard(offer.id);
+        }
+      }}
+    >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src={`img/${getRandomItem(photos)}`} width="260" height="200" alt="Place" />
+          <img
+            className="place-card__image"
+            src={`img/${photos.length > 0 ? photos[0] : 'room.jpg'}`}
+            width="260"
+            height="200"
+            alt="Place"
+          />
         </Link>
       </div>
       <div className="place-card__info">

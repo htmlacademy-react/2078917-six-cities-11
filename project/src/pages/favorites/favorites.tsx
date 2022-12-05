@@ -54,16 +54,23 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                   {offers.map(({ price, isPremium, rating, title, type, id, photos }, count) => {
                     const keyValue = `${id}-${count}`;
                     return (
-                      <article key={keyValue} className="favorites__card place-card">
-                        {
-                          isPremium &&
+                      <article
+                        key={keyValue}
+                        className="favorites__card place-card"
+                      >
+                        {isPremium &&
                           <div className="place-card__mark">
                             <span>Premium</span>
-                          </div>
-                        }
+                          </div>}
                         <div className="favorites__image-wrapper place-card__image-wrapper">
                           <Link to={`/offer/${id}`}>
-                            <img className="place-card__image" src={`img/${getRandomItem(photos)}`} width="150" height="110" alt="Place" />
+                            <img
+                              className="place-card__image"
+                              src={`img/${getRandomItem(photos)}`}
+                              width="150"
+                              height="110"
+                              alt="Place"
+                            />
                           </Link>
                         </div>
                         <div className="favorites__card-info place-card__info">
@@ -98,7 +105,10 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
               <li className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
-                    <a className="locations__item-link" href="/">
+                    <a
+                      className="locations__item-link"
+                      href="/"
+                    >
                       <span>Cologne</span>
                     </a>
                   </div>
@@ -107,7 +117,10 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                   {offers.map(({ id, price, isPremium, rating, title, type, photos}, count) => {
                     const keyValue = `${id}-${count}`;
                     return (
-                      <article key={keyValue} className="favorites__card place-card">
+                      <article
+                        key={keyValue}
+                        className="favorites__card place-card"
+                      >
                         {
                           isPremium &&
                           <div className="place-card__mark">
@@ -116,7 +129,13 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                         }
                         <div className="favorites__image-wrapper place-card__image-wrapper">
                           <a href="/">
-                            <img className="place-card__image" src={`img/${getRandomItem(photos)}`} width="150" height="110" alt="Place" />
+                            <img
+                              className="place-card__image"
+                              src={`img/${getRandomItem(photos)}`}
+                              width="150"
+                              height="110"
+                              alt="Place"
+                            />
                           </a>
                         </div>
                         <div className="favorites__card-info place-card__info">
@@ -153,7 +172,13 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
       </main>
       <footer className="footer container">
         <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
+          <img
+            className="footer__logo"
+            src="img/logo.svg"
+            alt="6 cities logo"
+            width="64"
+            height="33"
+          />
         </a>
       </footer>
     </div>

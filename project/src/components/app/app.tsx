@@ -8,7 +8,10 @@ type AppProps = {
 
 function App({ offersNumber, offers }: AppProps): JSX.Element {
   return (
-    <MainPage offersNumber={offersNumber} offers={offers}/>
+    <MainPage
+      offersNumber={offersNumber}
+      offers={offers}
+    />
   );
 }
 
