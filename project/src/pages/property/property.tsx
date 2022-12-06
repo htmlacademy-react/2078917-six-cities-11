@@ -10,7 +10,7 @@ type OfferProps = {
 function Property({ offers }: OfferProps): JSX.Element {
   const params = useParams();
   const offer = (offers.find((item) => item.id === Number.parseInt(params.id as string, 10))) as Offer;
-  const { photos, isPremium, title, type, rating, price, bedroomNumber, guests, facilities, reviews } = offer;
+  const { images, isPremium, title, type, rating, price, bedrooms, maxAdults, facilities, reviews } = offer;
   return (
     <div className="page">
       <header className="header">
@@ -44,7 +44,7 @@ function Property({ offers }: OfferProps): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {photos.map((url)=>
+              {images.map((url)=>
                 (
                   <div
                     key={url}
@@ -52,7 +52,7 @@ function Property({ offers }: OfferProps): JSX.Element {
                   >
                     <img
                       className="property__image"
-                      src={`img/${url}`}
+                      src={url}
                       alt="Photostudio"
                     />
                   </div>))}
@@ -87,10 +87,10 @@ function Property({ offers }: OfferProps): JSX.Element {
                   {type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {bedroomNumber}
+                  {bedrooms}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {guests} adults
+                  Max {maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
@@ -153,7 +153,7 @@ function Property({ offers }: OfferProps): JSX.Element {
                             <div className="reviews__avatar-wrapper user__avatar-wrapper">
                               <img
                                 className="reviews__avatar user__avatar"
-                                src={`img/${avatar}`}
+                                src={avatar}
                                 width="54"
                                 height="54"
                                 alt="Reviews avatar"

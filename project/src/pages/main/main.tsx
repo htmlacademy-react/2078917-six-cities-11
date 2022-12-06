@@ -3,6 +3,7 @@ import Logo from '../../components/logo/logo';
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import { useState } from 'react';
+import Map from '../../components/map/map';
 
 type MainPageProps = {
   offersNumber: number;
@@ -10,7 +11,7 @@ type MainPageProps = {
 };
 
 function MainPage({ offersNumber, offers }: MainPageProps): JSX.Element {
-  const [, setActiveCard] = useState<Offer|null>(null);
+  const [activeCard, setActiveCard] = useState<Offer|null>(null);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -128,7 +129,13 @@ function MainPage({ offersNumber, offers }: MainPageProps): JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map
+                  offers={offers}
+                  city={offers[0].city}
+                  activeOffer={activeCard}
+                />
+              </section>
             </div>
           </div>
         </div>

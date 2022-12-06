@@ -50,7 +50,7 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {offers.map(({ price, isPremium, rating, title, type, id, photos }) =>
+                  {offers.map(({ price, isPremium, rating, title, type, id, previewImage }) =>
                     (
                       <article
                         key={id}
@@ -64,7 +64,7 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                           <Link to={`/offer/${id}`}>
                             <img
                               className="place-card__image"
-                              src={`img/${photos.length > 0 ? photos[0] : 'room.jpg'}`}
+                              src={previewImage}
                               width="150"
                               height="110"
                               alt="Place"
@@ -112,7 +112,7 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {offers.map(({ id, price, isPremium, rating, title, type, photos}) =>
+                  {offers.map(({ id, price, isPremium, rating, title, type, previewImage}) =>
                     (
                       <article
                         key={id}
@@ -126,7 +126,7 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                           <a href="/">
                             <img
                               className="place-card__image"
-                              src={`img/${photos.length > 0 ? photos[0] : 'room.jpg'}`}
+                              src={previewImage}
                               width="150"
                               height="110"
                               alt="Place"

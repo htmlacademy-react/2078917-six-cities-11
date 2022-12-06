@@ -1,23 +1,39 @@
 import { Review } from './review';
 
 type Host = {
-  avatar: string;
+  id: number;
+  avatarUrl: string;
   name: string;
   isPro: boolean;
 };
 
+export type Point = {
+  lat: number;
+  lng: number;
+  zoom: number;
+}
+
+export type City = {
+  name: string;
+  location: Point;
+};
+
 export type Offer = {
   id: number;
-  photos: string[];
+  images: string[];
   title: string;
   description: string;
   isPremium: boolean;
+  isFavorite: boolean;
   type: string;
   rating: number;
-  bedroomNumber: number;
-  guests: number;
+  bedrooms: number;
+  maxAdults: number;
   price: number;
-  hostInfo: Host;
+  host: Host;
   facilities: string[];
   reviews: Review[];
+  location: Point;
+  city: City;
+  previewImage: string;
 };
