@@ -10,6 +10,7 @@ import Favorites from './pages/favorites/favorites';
 import Property from './pages/property/property';
 import { AppRoutes, AuthorizationStatuses } from './constants';
 import PrivateRoute from './components/private-route/private-route';
+import { offers } from './mocks/offers';
 
 
 const root = ReactDOM.createRoot(
@@ -23,7 +24,12 @@ root.render(
     <Routes>
       <Route
         path={AppRoutes.Root}
-        element={<App offersNumber={OFFERS_NUMBER} />}
+        element={
+          <App
+            offersNumber={OFFERS_NUMBER}
+            offers={offers}
+          />
+        }
       />
       <Route
         path={AppRoutes.Login}
@@ -35,13 +41,19 @@ root.render(
           <PrivateRoute
             authorizationStatus={AuthorizationStatuses.Auth}
           >
-            <Favorites />
+            <Favorites
+              offers={offers}
+            />
           </PrivateRoute>
         }
       />
       <Route
         path={AppRoutes.Offer}
-        element={<Property/>}
+        element={
+          <Property
+            offers={offers}
+          />
+        }
       />
       <Route
         path='*'
@@ -49,6 +61,4 @@ root.render(
       />
     </Routes>
   </BrowserRouter>
-
-
 );

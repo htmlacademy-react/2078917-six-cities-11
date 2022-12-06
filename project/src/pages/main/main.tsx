@@ -1,12 +1,16 @@
-import CityCard from '../../components/city-card/city-card';
+import OfferList from '../../components/offer-list/offer-list';
 import Logo from '../../components/logo/logo';
 import { Link } from 'react-router-dom';
+import { Offer } from '../../types/offer';
+import { useState } from 'react';
 
 type MainPageProps = {
   offersNumber: number;
+  offers: Offer[];
 };
 
-function MainPage({ offersNumber }: MainPageProps): JSX.Element {
+function MainPage({ offersNumber, offers }: MainPageProps): JSX.Element {
+  const [, setActiveCard] = useState<Offer|null>(null);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -42,32 +46,50 @@ function MainPage({ offersNumber }: MainPageProps): JSX.Element {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
+                <a
+                  className="locations__item-link tabs__item"
+                  href="/"
+                >
                   <span>Paris</span>
                 </a>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
+                <a
+                  className="locations__item-link tabs__item"
+                  href="/"
+                >
                   <span>Cologne</span>
                 </a>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
+                <a
+                  className="locations__item-link tabs__item"
+                  href="/"
+                >
                   <span>Brussels</span>
                 </a>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="/">
+                <a
+                  className="locations__item-link tabs__item tabs__item--active"
+                  href="/"
+                >
                   <span>Amsterdam</span>
                 </a>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
+                <a
+                  className="locations__item-link tabs__item"
+                  href="/"
+                >
                   <span>Hamburg</span>
                 </a>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
+                <a
+                  className="locations__item-link tabs__item"
+                  href="/"
+                >
                   <span>Dusseldorf</span>
                 </a>
               </li>
@@ -79,7 +101,11 @@ function MainPage({ offersNumber }: MainPageProps): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offersNumber} places to stay in Amsterdam</b>
-              <form className="places__sorting" action="#" method="get">
+              <form
+                className="places__sorting"
+                action="#"
+                method="get"
+              >
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
                   Popular
@@ -95,11 +121,10 @@ function MainPage({ offersNumber }: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CityCard />
-                <CityCard />
-                <CityCard />
-                <CityCard />
-                <CityCard />
+                <OfferList
+                  offers={offers}
+                  setActiveCard={setActiveCard}
+                />
               </div>
             </section>
             <div className="cities__right-section">
