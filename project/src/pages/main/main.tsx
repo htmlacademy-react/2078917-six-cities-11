@@ -10,7 +10,7 @@ type MainPageProps = {
 };
 
 function MainPage({ offersNumber, offers }: MainPageProps): JSX.Element {
-  const [, setActiveCard] = useState(0);
+  const [, setActiveCard] = useState<Offer|null>(null);
   return (
     <div className="page page--gray page--main">
       <header className="header">

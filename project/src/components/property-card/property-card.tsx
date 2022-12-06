@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 type OfferProps = {
   offer: Offer;
-  setActiveCard?: React.Dispatch<React.SetStateAction<number>>;
+  setActiveCard?: React.Dispatch<React.SetStateAction<Offer|null>>;
 };
 
 function PropertyCard({ offer, setActiveCard}: OfferProps ): JSX.Element {
@@ -13,9 +13,8 @@ function PropertyCard({ offer, setActiveCard}: OfferProps ): JSX.Element {
     <article
       className="cities__card place-card"
       onMouseOver={() => {
-        if (setActiveCard)
-        {
-          setActiveCard(offer.id);
+        if (setActiveCard) {
+          setActiveCard(offer);
         }
       }}
     >

@@ -1,7 +1,6 @@
 import Logo from '../../components/logo/logo';
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
-import { getRandomItem } from '../../mocks/utils';
 
 type FavoritesProps = {
   offers: Offer[];
@@ -51,11 +50,10 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {offers.map(({ price, isPremium, rating, title, type, id, photos }, count) => {
-                    const keyValue = `${id}-${count}`;
-                    return (
+                  {offers.map(({ price, isPremium, rating, title, type, id, photos }) =>
+                    (
                       <article
-                        key={keyValue}
+                        key={id}
                         className="favorites__card place-card"
                       >
                         {isPremium &&
@@ -66,7 +64,7 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                           <Link to={`/offer/${id}`}>
                             <img
                               className="place-card__image"
-                              src={`img/${getRandomItem(photos)}`}
+                              src={`img/${photos.length > 0 ? photos[0] : 'room.jpg'}`}
                               width="150"
                               height="110"
                               alt="Place"
@@ -97,8 +95,8 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                           </h2>
                           <p className="place-card__type">{type}</p>
                         </div>
-                      </article>);
-                  })}
+                      </article>)
+                  )}
                 </div>
               </li>
 
@@ -114,24 +112,21 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {offers.map(({ id, price, isPremium, rating, title, type, photos}, count) => {
-                    const keyValue = `${id}-${count}`;
-                    return (
+                  {offers.map(({ id, price, isPremium, rating, title, type, photos}) =>
+                    (
                       <article
-                        key={keyValue}
+                        key={id}
                         className="favorites__card place-card"
                       >
-                        {
-                          isPremium &&
+                        {isPremium &&
                           <div className="place-card__mark">
                             <span>Premium</span>
-                          </div>
-                        }
+                          </div>}
                         <div className="favorites__image-wrapper place-card__image-wrapper">
                           <a href="/">
                             <img
                               className="place-card__image"
-                              src={`img/${getRandomItem(photos)}`}
+                              src={`img/${photos.length > 0 ? photos[0] : 'room.jpg'}`}
                               width="150"
                               height="110"
                               alt="Place"
@@ -162,8 +157,8 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                           </h2>
                           <p className="place-card__type">{type}</p>
                         </div>
-                      </article>);
-                  })}
+                      </article>)
+                  )}
                 </div>
               </li>
             </ul>

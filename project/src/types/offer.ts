@@ -1,6 +1,6 @@
 import { Review } from './review';
 
-export type Host = {
+type Host = {
   avatar: string;
   name: string;
   isPro: boolean;

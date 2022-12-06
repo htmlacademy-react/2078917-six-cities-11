@@ -10,7 +10,7 @@ export const offers: Offer[] = [
       'apartment-02.jpg',
       'apartment-03.jpg',
       'studio-01.jpg',
-      'apartment-01.jpg'
+      'studio-photos.jpg'
     ],
     title: 'Nice, cozy, warm big bed apartment',
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
@@ -44,7 +44,7 @@ export const offers: Offer[] = [
       'apartment-02.jpg',
       'apartment-01.jpg',
       'studio-01.jpg',
-      'apartment-01.jpg'
+      'studio-photos.jpg'
     ],
     title: 'Wood and stone place',
     description: 'An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.',
@@ -76,7 +76,7 @@ export const offers: Offer[] = [
       'apartment-02.jpg',
       'apartment-01.jpg',
       'studio-01.jpg',
-      'apartment-01.jpg'
+      'studio-photos.jpg'
     ],
     title: 'Canal View Prinsengracht',
     description: 'An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.',
@@ -113,7 +113,7 @@ export const offers: Offer[] = [
       'apartment-03.jpg',
       'apartment-01.jpg',
       'studio-01.jpg',
-      'apartment-01.jpg'
+      'studio-photos.jpg'
     ],
     title: 'Beautiful &amp; luxurious apartment at great location',
     description: 'An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.',

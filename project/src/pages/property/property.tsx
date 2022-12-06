@@ -44,11 +44,10 @@ function Property({ offers }: OfferProps): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {photos.map((url, count)=>{
-                const keyValue = `${url}${count}`;
-                return (
+              {photos.map((url)=>
+                (
                   <div
-                    key={keyValue}
+                    key={url}
                     className="property__image-wrapper"
                   >
                     <img
@@ -56,19 +55,15 @@ function Property({ offers }: OfferProps): JSX.Element {
                       src={`img/${url}`}
                       alt="Photostudio"
                     />
-                  </div>
-                );
-              })}
+                  </div>))}
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {
-                isPremium &&
+              {isPremium &&
                 <div className="property__mark">
                   <span>Premium</span>
-                </div>
-              }
+                </div>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {title}
@@ -105,17 +100,15 @@ function Property({ offers }: OfferProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {facilities.map((facility, count)=>{
-                    const keyValue = `${facility}-${count}`;
-                    return(
+                  {facilities.map((facility)=>
+                    (
                       <li
-                        key={keyValue}
+                        key={facility}
                         className="property__inside-item"
                       >
                         {facility}
-                      </li>
-                    );
-                  })}
+                      </li>)
+                  )}
                 </ul>
               </div>
               <div className="property__host">
@@ -150,18 +143,17 @@ function Property({ offers }: OfferProps): JSX.Element {
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
                 <ul className="reviews__list">
                   {
-                    reviews.map((review, count)=>{
-                      const keyValue = `${review.id}-count`;
-                      return(
+                    reviews.map(({id, avatar, mark, text, date}) =>
+                      (
                         <li
-                          key={keyValue}
+                          key={id}
                           className="reviews__item"
                         >
                           <div className="reviews__user user">
                             <div className="reviews__avatar-wrapper user__avatar-wrapper">
                               <img
                                 className="reviews__avatar user__avatar"
-                                src={`img/${review.avatar}`}
+                                src={`img/${avatar}`}
                                 width="54"
                                 height="54"
                                 alt="Reviews avatar"
@@ -174,23 +166,23 @@ function Property({ offers }: OfferProps): JSX.Element {
                           <div className="reviews__info">
                             <div className="reviews__rating rating">
                               <div className="reviews__stars rating__stars">
-                                <span style={{ width: `${review.mark * 20}%` }}></span>
+                                <span style={{ width: `${mark * 20}%` }}></span>
                                 <span className="visually-hidden">Rating</span>
                               </div>
                             </div>
                             <p className="reviews__text">
-                              {review.text}
+                              {text}
                             </p>
                             <time
                               className="reviews__time"
                               dateTime="2019-04-24"
                             >
-                              {review.date}
+                              {date}
                             </time>
                           </div>
                         </li>
-                      );
-                    })
+                      )
+                    )
                   }
 
                 </ul>

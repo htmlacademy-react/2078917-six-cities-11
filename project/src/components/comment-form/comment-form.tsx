@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, Fragment } from 'react';
 
 function CommentForm(): JSX.Element {
 
@@ -12,6 +12,30 @@ function CommentForm(): JSX.Element {
     setFormData({...formData, [name]: value});
   };
 
+  const ratingInputs = Array.from({ length: 5 }, (_, i) => 5 - i).map((number) => {
+    const id = `${number}-${number === 1 ? 'star' : 'stars'}`;
+    return (
+      <Fragment key={id}>
+        <input
+          className="form__rating-input visually-hidden"
+          name="rating"
+          value={number}
+          id={id}
+          type="radio"
+          onChange={handleFieldChange}
+        />
+        <label
+          htmlFor={id}
+          className="reviews__rating-label form__rating-label"
+          title="perfect"
+        >
+          <svg className="form__star-image" width="37" height="33">
+            <use xlinkHref="#icon-star"></use>
+          </svg>
+        </label>
+      </Fragment>
+    );
+  });
 
   return (
     <form className="reviews__form form">
@@ -22,30 +46,7 @@ function CommentForm(): JSX.Element {
           Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        {Array.from(Array(10).keys()).map((number)=>{
-          const id = `${number}-${number === 1 ? 'star' : 'stars'}`;
-          return (
-            <>
-              <input
-                className="form__rating-input visually-hidden"
-                name="rating"
-                value={number}
-                id={id}
-                type="radio"
-                onChange={handleFieldChange}
-              />
-              <label
-                htmlFor={id}
-                className="reviews__rating-label form__rating-label"
-                title="perfect"
-              >
-                <svg className="form__star-image" width="37" height="33">
-                  <use xlinkHref="#icon-star"></use>
-                </svg>
-              </label>
-            </>
-          );
-        })}
+        {ratingInputs}
       </div>
       <textarea
         className="reviews__textarea form__textarea"
