@@ -1,7 +1,11 @@
 import { useParams } from 'react-router';
 import { Offer } from '../../types/offer';
 import Logo from '../../components/logo/logo';
-import CommentForm from '../../components/comment-form/comment-form';
+import ReviewList from '../../components/review-list/review-list';
+import { offersNearby } from '../../mocks/offers';
+import Map from '../../components/map/map';
+import { useState} from 'react';
+import OfferList from '../../components/offer-list/offer-list';
 
 type OfferProps = {
   offers: Offer[];
@@ -11,6 +15,9 @@ function Property({ offers }: OfferProps): JSX.Element {
   const params = useParams();
   const offer = (offers.find((item) => item.id === Number.parseInt(params.id as string, 10))) as Offer;
   const { images, isPremium, title, type, rating, price, bedrooms, maxAdults, facilities, reviews } = offer;
+
+  const [activeCard, setActiveCard] = useState<Offer | null>(null);
+
   return (
     <div className="page">
       <header className="header">
@@ -139,61 +146,23 @@ function Property({ offers }: OfferProps): JSX.Element {
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  {
-                    reviews.map(({id, avatar, mark, text, date}) =>
-                      (
-                        <li
-                          key={id}
-                          className="reviews__item"
-                        >
-                          <div className="reviews__user user">
-                            <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                              <img
-                                className="reviews__avatar user__avatar"
-                                src={avatar}
-                                width="54"
-                                height="54"
-                                alt="Reviews avatar"
-                              />
-                            </div>
-                            <span className="reviews__user-name">
-                              Max
-                            </span>
-                          </div>
-                          <div className="reviews__info">
-                            <div className="reviews__rating rating">
-                              <div className="reviews__stars rating__stars">
-                                <span style={{ width: `${mark * 20}%` }}></span>
-                                <span className="visually-hidden">Rating</span>
-                              </div>
-                            </div>
-                            <p className="reviews__text">
-                              {text}
-                            </p>
-                            <time
-                              className="reviews__time"
-                              dateTime="2019-04-24"
-                            >
-                              {date}
-                            </time>
-                          </div>
-                        </li>
-                      )
-                    )
-                  }
-
-                </ul>
-                <CommentForm />
-              </section>
+              <ReviewList reviews={reviews}/>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map
+              offers={offersNearby}
+              city={offersNearby[0].city}
+              activeOffer={activeCard}
+            />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
+            <OfferList
+              offers={offersNearby}
+              setActiveCard={setActiveCard}
+            />
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               <article className="near-places__card place-card">
