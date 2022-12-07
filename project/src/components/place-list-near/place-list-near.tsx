@@ -1,17 +1,18 @@
 import { Offer } from '../../types/offer';
-import PlaceCardMain from '../place-card-main/place-card-main';
+import PlaceCardNear from '../place-card-main/place-card-main';
 
-type PlaceListMainProps = {
+type PlaceListNearProps = {
   offers: Offer[];
   setActiveCard: React.Dispatch<React.SetStateAction<Offer | null>>;
+  className: string;
 };
 
-function PlaceListMain({ offers, setActiveCard }: PlaceListMainProps): JSX.Element {
+function PlaceListNear({ offers, setActiveCard, className }: PlaceListNearProps): JSX.Element {
   return (
-    <div className='cities__places-list places__list tabs__content'>
+    <div className='near-places__list places__list'>
       {offers.map((offer) =>
         (
-          <PlaceCardMain
+          <PlaceCardNear
             key={offer.id}
             offer={offer}
             setActiveCard={setActiveCard}
@@ -22,4 +23,4 @@ function PlaceListMain({ offers, setActiveCard }: PlaceListMainProps): JSX.Eleme
   );
 }
 
-export default PlaceListMain;
+export default PlaceListNear;
