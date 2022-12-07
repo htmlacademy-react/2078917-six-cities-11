@@ -7,7 +7,7 @@ type OfferProps = {
 };
 
 function PropertyCard({ offer, setActiveCard}: OfferProps ): JSX.Element {
-  const { id, photos, title, type, rating, price } = offer;
+  const { id, previewImage, title, type, rating, price } = offer;
 
   return (
     <article
@@ -22,7 +22,7 @@ function PropertyCard({ offer, setActiveCard}: OfferProps ): JSX.Element {
         <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
-            src={`img/${photos.length > 0 ? photos[0] : 'room.jpg'}`}
+            src={previewImage}
             width="260"
             height="200"
             alt="Place"

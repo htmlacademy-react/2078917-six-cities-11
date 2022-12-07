@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, Fragment } from 'react';
+import { useState, ChangeEvent, Fragment } from 'react';
 
 function CommentForm(): JSX.Element {
 
@@ -12,20 +12,20 @@ function CommentForm(): JSX.Element {
     setFormData({...formData, [name]: value});
   };
 
-  const ratingInputs = Array.from({ length: 5 }, (_, i) => 5 - i).map((number) => {
-    const id = `${number}-${number === 1 ? 'star' : 'stars'}`;
-    return (
-      <Fragment key={id}>
+  const ratingInputIds = Array.from({ length: 5 }, (_, i) => 5 - i);
+  const ratingInputs = ratingInputIds.map((number) =>
+    (
+      <Fragment key={number}>
         <input
           className="form__rating-input visually-hidden"
           name="rating"
           value={number}
-          id={id}
+          id={`${number}`}
           type="radio"
           onChange={handleFieldChange}
         />
         <label
-          htmlFor={id}
+          htmlFor={`${number}`}
           className="reviews__rating-label form__rating-label"
           title="perfect"
         >
@@ -34,8 +34,8 @@ function CommentForm(): JSX.Element {
           </svg>
         </label>
       </Fragment>
-    );
-  });
+    )
+  );
 
   return (
     <form className="reviews__form form">
