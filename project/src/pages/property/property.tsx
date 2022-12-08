@@ -1,11 +1,12 @@
 import { useParams } from 'react-router';
 import { Offer } from '../../types/offer';
 import Logo from '../../components/logo/logo';
-import ReviewList from '../../components/review-list/review-list';
+import ReviewList from '../../components/reviews-list/review-list';
 import { offersNearby } from '../../mocks/offers';
 import Map from '../../components/map/map';
 import { useState} from 'react';
-import PlaceListMain from '../../components/place-list-main/place-list-main';
+import PlacesList from '../../components/places-list/places-list';
+import { PlaceCardModes } from '../../constants';
 
 type OfferProps = {
   offers: Offer[];
@@ -158,10 +159,13 @@ function Property({ offers }: OfferProps): JSX.Element {
           </section>
         </section>
         <div className="container">
-          <PlaceListMain
-            offers={offersNearby}
-            setActiveCard={setActiveCard}
-          />
+          <div className='near-places__list places__list'>
+            <PlacesList
+              offers={offersNearby}
+              setActiveCard={setActiveCard}
+              mode={PlaceCardModes.Property}
+            />
+          </div>
         </div>
       </main>
     </div>

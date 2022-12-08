@@ -1,18 +1,26 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
+import { PlaceCardModes } from '../../constants';
 
-type OfferProps = {
+type PlaceCardProps = {
   offer: Offer;
   setActiveCard?: React.Dispatch<React.SetStateAction<Offer | null>>;
-  className: string;
+  mode: string;
 };
 
-function PlaceCard({ offer, setActiveCard, className }: OfferProps): JSX.Element {
+function PlaceCard({ offer, setActiveCard, mode }: PlaceCardProps): JSX.Element {
   const { id, previewImage, title, type, rating, price, isPremium } = offer;
-
   return (
     <article
-      className={`place-card ${className}`}
+      className={`place-card ${
+        (()=>{
+          switch (mode) {
+            case PlaceCardModes.City: return 'cities__card';
+            case PlaceCardModes.Property: return 'near-places__card';
+            default: return '';
+          }
+        })()
+      }`}
       onMouseOver={() => {
         if (setActiveCard) {
           setActiveCard(offer);
@@ -23,7 +31,16 @@ function PlaceCard({ offer, setActiveCard, className }: OfferProps): JSX.Element
         <div className="place-card__mark">
           <span>Premium</span>
         </div> }
-      <div className="place-card__image-wrapper">
+      <div className={`place-card__image-wrapper ${
+        (() => {
+          switch (mode) {
+            case PlaceCardModes.City: return 'cities__image-wrapper';
+            case PlaceCardModes.Property: return 'near-places__image-wrapper';
+            default: return '';
+          }
+        })()
+      }`}
+      >
         <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"

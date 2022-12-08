@@ -1,17 +1,17 @@
 import { Review } from '../../types/review';
-import CommentForm from '../../components/comment-form/comment-form';
+import CommentForm from '../comment-form/comment-form';
 
-type ReviewListProps = {
+type ReviewsListProps = {
   reviews: Review[];
 };
 
-function ReviewList({ reviews }: ReviewListProps): JSX.Element {
+function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
       <ul className="reviews__list">
         {
-          reviews.map(({ id, avatar, mark, text, date }) =>
+          reviews.map(({ id, avatar, mark, text, date, name }) =>
             (
               <li
                 key={id}
@@ -28,7 +28,7 @@ function ReviewList({ reviews }: ReviewListProps): JSX.Element {
                     />
                   </div>
                   <span className="reviews__user-name">
-                    Max
+                    {name}
                   </span>
                 </div>
                 <div className="reviews__info">
@@ -43,7 +43,6 @@ function ReviewList({ reviews }: ReviewListProps): JSX.Element {
                   </p>
                   <time
                     className="reviews__time"
-                    dateTime="2019-04-24"
                   >
                     {date}
                   </time>
@@ -58,4 +57,4 @@ function ReviewList({ reviews }: ReviewListProps): JSX.Element {
   );
 }
 
-export default ReviewList;
+export default ReviewsList;

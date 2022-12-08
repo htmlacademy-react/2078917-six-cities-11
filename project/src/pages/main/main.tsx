@@ -1,9 +1,10 @@
-import OfferList from '../../components/offer-list/offer-list';
 import Logo from '../../components/logo/logo';
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import { useState } from 'react';
 import Map from '../../components/map/map';
+import PlacesList from '../../components/places-list/places-list';
+import { PlaceCardModes } from '../../constants';
 
 type MainPageProps = {
   offersNumber: number;
@@ -121,10 +122,11 @@ function MainPage({ offersNumber, offers }: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <OfferList
+              <div className='cities__places-list places__list tabs__content'>
+                <PlacesList
                   offers={offers}
                   setActiveCard={setActiveCard}
+                  mode={PlaceCardModes.City}
                 />
               </div>
             </section>
