@@ -92,7 +92,7 @@ export const offers: Offer[] = [
       zoom: 10
     },
     city: {
-      name: 'Amsterdam',
+      name: 'Paris',
       location: {
         lat: 52.374,
         lng: 4.88969,
@@ -145,7 +145,7 @@ export const offers: Offer[] = [
       zoom: 10
     },
     city: {
-      name: 'Amsterdam',
+      name: 'Johannesburg',
       location: {
         lat: 52.374,
         lng: 4.88969,
