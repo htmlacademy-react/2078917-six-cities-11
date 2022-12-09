@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 import { Offer } from '../../types/offer';
 import Logo from '../../components/logo/logo';
-import ReviewList from '../../components/reviews-list/reviews-list';
+import ReviewsList from '../../components/reviews-list/reviews-list';
 import { offersNearby } from '../../mocks/offers';
 import Map from '../../components/map/map';
 import { useState} from 'react';
@@ -147,7 +147,7 @@ function Property({ offers }: OfferProps): JSX.Element {
                   </p>
                 </div>
               </div>
-              <ReviewList reviews={reviews}/>
+              <ReviewsList reviews={reviews}/>
             </div>
           </div>
           <section className="property__map map">
