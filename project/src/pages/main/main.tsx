@@ -6,12 +6,12 @@ import Map from '../../components/map/map';
 import PlacesList from '../../components/places-list/places-list';
 import { PlaceCardModes } from '../../constants';
 
-type MainPageProps = {
+type MainProps = {
   offersNumber: number;
   offers: Offer[];
 };
 
-function MainPage({ offersNumber, offers }: MainPageProps): JSX.Element {
+function Main({ offersNumber, offers }: MainProps): JSX.Element {
   const [activeCard, setActiveCard] = useState<Offer|null>(null);
   return (
     <div className="page page--gray page--main">
@@ -146,4 +146,4 @@ function MainPage({ offersNumber, offers }: MainPageProps): JSX.Element {
   );
 }
 
-export default MainPage;
+export default Main;

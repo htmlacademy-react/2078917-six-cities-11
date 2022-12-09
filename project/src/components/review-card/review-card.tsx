@@ -5,7 +5,7 @@ type ReviewCardProps = {
 };
 
 function ReviewCard({ review }: ReviewCardProps): JSX.Element {
-  const { avatar, mark, text, date } = review;
+  const { avatar, mark, text, date, name } = review;
   return (
     <li
       className="reviews__item"
@@ -21,7 +21,7 @@ function ReviewCard({ review }: ReviewCardProps): JSX.Element {
           />
         </div>
         <span className="reviews__user-name">
-          Max
+          {name}
         </span>
       </div>
       <div className="reviews__info">
@@ -34,10 +34,7 @@ function ReviewCard({ review }: ReviewCardProps): JSX.Element {
         <p className="reviews__text">
           {text}
         </p>
-        <time
-          className="reviews__time"
-          dateTime="2019-04-24"
-        >
+        <time className="reviews__time">
           {date}
         </time>
       </div>

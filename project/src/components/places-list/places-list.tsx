@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Offer } from '../../types/offer';
 import PlaceCard from '../place-card/place-card';
 
@@ -9,7 +10,7 @@ type PlacesListProps = {
 
 function PlacesList({ offers, setActiveCard, mode }: PlacesListProps): JSX.Element {
   return (
-    <div className='cities__places-list places__list tabs__content'>
+    <Fragment>
       {offers.map((offer) =>
         (
           <PlaceCard
@@ -20,7 +21,7 @@ function PlacesList({ offers, setActiveCard, mode }: PlacesListProps): JSX.Eleme
           />
         )
       )}
-    </div>
+    </Fragment>
   );
 }
 
