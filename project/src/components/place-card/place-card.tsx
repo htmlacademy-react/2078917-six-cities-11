@@ -1,24 +1,46 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
+import { PlaceCardModes } from '../../constants';
 
-type OfferProps = {
+type PlaceCardProps = {
   offer: Offer;
-  setActiveCard?: React.Dispatch<React.SetStateAction<Offer|null>>;
+  setActiveCard?: React.Dispatch<React.SetStateAction<Offer | null>>;
+  mode: string;
 };
 
-function PropertyCard({ offer, setActiveCard}: OfferProps ): JSX.Element {
-  const { id, previewImage, title, type, rating, price } = offer;
-
+function PlaceCard({ offer, setActiveCard, mode }: PlaceCardProps): JSX.Element {
+  const { id, previewImage, title, type, rating, price, isPremium } = offer;
   return (
     <article
-      className="cities__card place-card"
+      className={`place-card ${
+        (()=>{
+          switch (mode) {
+            case PlaceCardModes.City: return 'cities__card';
+            case PlaceCardModes.Property: return 'near-places__card';
+            default: return '';
+          }
+        })()
+      }`}
       onMouseOver={() => {
         if (setActiveCard) {
           setActiveCard(offer);
         }
       }}
     >
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      { isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div> }
+      <div className={`place-card__image-wrapper ${
+        (() => {
+          switch (mode) {
+            case PlaceCardModes.City: return 'cities__image-wrapper';
+            case PlaceCardModes.Property: return 'near-places__image-wrapper';
+            default: return '';
+          }
+        })()
+      }`}
+      >
         <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
@@ -44,7 +66,7 @@ function PropertyCard({ offer, setActiveCard}: OfferProps ): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style= {{ width: `${rating * 20}%` }}></span>
+            <span style={{ width: `${rating * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -57,4 +79,4 @@ function PropertyCard({ offer, setActiveCard}: OfferProps ): JSX.Element {
   );
 }
 
-export default PropertyCard;
+export default PlaceCard;

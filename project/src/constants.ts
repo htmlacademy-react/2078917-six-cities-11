@@ -10,3 +10,8 @@ export enum AuthorizationStatuses {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
 }
+
+export enum PlaceCardModes {
+  City = 'CITY',
+  Property = 'PROPERTY'
+}
