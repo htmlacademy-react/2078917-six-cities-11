@@ -34,9 +34,10 @@ function ReviewCard({ review }: ReviewCardProps): JSX.Element {
         <p className="reviews__text">
           {text}
         </p>
-        <time className="reviews__time">
-          {date}
-        </time>
+        <time
+          className="reviews__time"
+          dateTime={date}
+        />
       </div>
     </li>
   );

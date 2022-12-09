@@ -8,12 +8,7 @@ import { PlaceCardModes } from '../../constants';
 import { useAppSelector } from '../../hooks';
 import CitiesList from '../../components/cities-list/cities-list';
 
-type MainProps = {
-  offersNumber: number;
-  offers: Offer[];
-};
-
-function Main({ offersNumber, offers }: MainProps): JSX.Element {
+function Main(): JSX.Element {
   const [activeCard, setActiveCard] = useState<Offer|null>(null);
   const city = useAppSelector((state) => state.cityName);
   const currentOffers = useAppSelector((state) => state.offers).filter((offer) => offer.city.name === city);
