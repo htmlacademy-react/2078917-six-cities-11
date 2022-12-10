@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { SortType } from '../../constants';
-import SortOption from '../sort-option/sort-option';
 
 type SortsListProps = {
   activeSortOption: string;
@@ -8,6 +7,7 @@ type SortsListProps = {
 }
 
 function SortsList({ activeSortOption, setActiveSortOption }: SortsListProps): JSX.Element {
+
   const [isActive, setActive] = useState<boolean>(false);
   const selectSortOption = (sortType: string) => {
     setActiveSortOption(sortType);
@@ -29,12 +29,14 @@ function SortsList({ activeSortOption, setActiveSortOption }: SortsListProps): J
       <ul className={`places__options places__options--custom ${isActive ? 'places__options--opened' : ''}`}>
         {Array.from(Object.values(SortType)).map(
           (sortType) => (
-            <SortOption
+            <li
               key={sortType}
-              sortType={sortType}
-              activeSortOption={activeSortOption}
-              selectSortOption={selectSortOption}
-            />))}
+              className={`places__option ${sortType === activeSortOption ? 'places__option--active' : ''}`}
+              tabIndex={0}
+              onClick={() => selectSortOption(sortType)}
+            >
+              {sortType}
+            </li>))}
       </ul>
     </div>
   );

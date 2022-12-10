@@ -28,7 +28,7 @@ function Map({ offers, activeOffer }: MapProps): JSX.Element {
   const map = useMap(mapRef, offers[0].city);
 
   useEffect(() => {
-    const markersList: Array<Marker> = new Array<Marker>();
+    const markersList: Marker[] = [];
     if (map) {
       offers.forEach((offer) => {
         const marker = new Marker({

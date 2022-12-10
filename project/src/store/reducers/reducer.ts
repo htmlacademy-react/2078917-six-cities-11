@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { selectCity } from '../actions/action';
+import { setCity } from '../actions/action';
 import { offers } from '../../mocks/offers';
 import { Offer } from '../../types/offer';
 import { CityType } from '../../constants';
@@ -16,7 +16,7 @@ const initialState: initialStateProps = {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(selectCity, (state, action) => {
+    .addCase(setCity, (state, action) => {
       state.cityName = action.payload;
     });
 });
