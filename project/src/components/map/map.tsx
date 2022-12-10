@@ -3,13 +3,7 @@ import { Icon, Marker } from 'leaflet';
 import useMap from '../../hooks/use-map';
 import { Offer } from '../../types/offer';
 import 'leaflet/dist/leaflet.css';
-import { City } from '../../types/offer';
 
-type MapProps = {
-  offers: Offer[];
-  city: City;
-  activeOffer: Offer | null;
-};
 
 const defaultCustomIcon = new Icon({
   iconUrl: 'img/pin.svg',
@@ -23,12 +17,18 @@ const currentCustomIcon = new Icon({
   iconAnchor: [14, 40]
 });
 
-function Map({ offers, city, activeOffer }: MapProps): JSX.Element {
+type MapProps = {
+  offers: Offer[];
+  activeOffer: Offer | null;
+};
+
+function Map({ offers, activeOffer }: MapProps): JSX.Element {
 
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const map = useMap({mapRef, city});
+  const map = useMap(mapRef, offers[0].city);
 
   useEffect(() => {
+    const markersList: Array<Marker> = new Array<Marker>();
     if (map) {
       offers.forEach((offer) => {
         const marker = new Marker({
@@ -43,8 +43,12 @@ function Map({ offers, city, activeOffer }: MapProps): JSX.Element {
               : defaultCustomIcon
           )
           .addTo(map);
+        markersList.push(marker);
       });
     }
+    return () => {
+      markersList.forEach((marker) => map?.removeLayer(marker));
+    };
   }, [map, offers, activeOffer]);
 
   return <div style={{ height: '100%' }} ref={mapRef}></div>;

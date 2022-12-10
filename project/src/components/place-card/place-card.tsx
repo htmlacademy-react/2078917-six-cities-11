@@ -26,6 +26,11 @@ function PlaceCard({ offer, setActiveCard, mode }: PlaceCardProps): JSX.Element 
           setActiveCard(offer);
         }
       }}
+      onMouseOut={() => {
+        if (setActiveCard) {
+          setActiveCard(null);
+        }
+      }}
     >
       { isPremium &&
         <div className="place-card__mark">

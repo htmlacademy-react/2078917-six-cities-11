@@ -18,7 +18,7 @@ export const offers: Offer[] = [
     isPremium: true,
     isFavorite: false,
     type: 'Apartment',
-    rating: 5,
+    rating: 5.1,
     bedrooms: 3,
     maxAdults: 2,
     price: 500,
@@ -68,13 +68,13 @@ export const offers: Offer[] = [
     isPremium: false,
     isFavorite: true,
     type: 'Apartment',
-    rating: 4,
+    rating: 4.1,
     bedrooms: 2,
     maxAdults: 2,
     price: 1500,
     host: {
       id: 1,
-      avatarUrl: 'img/avatar- max.jpg',
+      avatarUrl: 'img/avatar-max.jpg',
       name: 'Max',
       isPro: false,
     },
@@ -87,15 +87,15 @@ export const offers: Offer[] = [
     ],
     reviews: reviews,
     location: {
-      lat: 52.3609553943508,
-      lng: 4.85309666406198,
+      lat: 48.864675474,
+      lng: 2.3496547567,
       zoom: 10
     },
     city: {
       name: 'Paris',
       location: {
-        lat: 52.374,
-        lng: 4.88969,
+        lat: 48.864,
+        lng: 2.349,
         zoom: 10
       }
     }
@@ -116,7 +116,7 @@ export const offers: Offer[] = [
     isPremium: false,
     isFavorite: true,
     type: 'Apartment',
-    rating: 3,
+    rating: 3.1,
     bedrooms: 7,
     maxAdults: 7,
     price: 11500,
@@ -169,7 +169,7 @@ export const offers: Offer[] = [
     isPremium: true,
     isFavorite: false,
     type: 'Private room',
-    rating: 1,
+    rating: 1.1,
     bedrooms: 1,
     maxAdults: 1,
     price: 100,
