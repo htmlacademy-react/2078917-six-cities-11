@@ -15,7 +15,7 @@ type OfferProps = {
 function Property({ offers }: OfferProps): JSX.Element {
   const params = useParams();
   const offer = (offers.find((item) => item.id === Number.parseInt(params.id as string, 10))) as Offer;
-  const { images, isPremium, title, type, rating, price, bedrooms, maxAdults, facilities, reviews } = offer;
+  const { images, isPremium, title, type, rating, price, bedrooms, maxAdults, facilities, reviews, host, description } = offer;
 
   const [activeCard, setActiveCard] = useState<Offer | null>(null);
 
@@ -125,25 +125,23 @@ function Property({ offers }: OfferProps): JSX.Element {
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
                     <img
                       className="property__avatar user__avatar"
-                      src="img/avatar-angelina.jpg"
+                      src={host.avatarUrl}
                       width="74"
                       height="74"
                       alt="Host avatar"
                     />
                   </div>
                   <span className="property__user-name">
-                    Angelina
+                    {host.name}
                   </span>
-                  <span className="property__user-status">
-                    Pro
-                  </span>
+                  {host.isPro &&
+                    <span className="property__user-status">
+                      Pro
+                    </span>}
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                    {description}
                   </p>
                 </div>
               </div>
@@ -153,7 +151,6 @@ function Property({ offers }: OfferProps): JSX.Element {
           <section className="property__map map">
             <Map
               offers={offersNearby}
-              city={offersNearby[0].city}
               activeOffer={activeCard}
             />
           </section>

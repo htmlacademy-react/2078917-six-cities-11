@@ -1,12 +1,9 @@
 import Logo from '../../components/logo/logo';
-import { Offer } from '../../types/offer';
+import { useAppSelector } from '../../hooks/index';
 import { Link } from 'react-router-dom';
 
-type FavoritesProps = {
-  offers: Offer[];
-};
-
-function Favorites({ offers }: FavoritesProps): JSX.Element {
+function Favorites(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers).filter((offer) => offer.isFavorite);
   return (
     <div className="page">
       <header className="header">

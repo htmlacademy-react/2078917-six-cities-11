@@ -1,10 +1,17 @@
-import { Review } from './review';
-
 type Host = {
   id: number;
   avatarUrl: string;
   name: string;
   isPro: boolean;
+};
+
+export type Review = {
+  id: number;
+  avatar: string;
+  name: string;
+  mark: number;
+  date: string;
+  text: string;
 };
 
 export type Point = {

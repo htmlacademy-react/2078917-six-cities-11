@@ -1,4 +1,4 @@
-import { Review } from '../../types/review';
+import { Review } from '../../types/offer';
 import CommentForm from '../comment-form/comment-form';
 
 type ReviewsListProps = {
@@ -14,8 +14,8 @@ function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
           reviews.map(({ id, avatar, mark, text, date, name }) =>
             (
               <li
-                key={id}
                 className="reviews__item"
+                key={id}
               >
                 <div className="reviews__user user">
                   <div className="reviews__avatar-wrapper user__avatar-wrapper">
@@ -43,8 +43,9 @@ function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
                   </p>
                   <time
                     className="reviews__time"
+                    dateTime={date.split('T')[0]}
                   >
-                    {date}
+                    {new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
                   </time>
                 </div>
               </li>
