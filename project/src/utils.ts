@@ -1,4 +1,4 @@
-import { SortType } from './constants';
+import { SortTypes } from './constants';
 import { Offer } from './types/offer';
 
 const sortHighToLow = (offerA: Offer, offerB: Offer) => offerB.price - offerA.price;
@@ -10,13 +10,13 @@ const sortTopRated = (offerA: Offer, offerB: Offer) => offerB.rating - offerA.ra
 export const getSortedOffers = (offers: Offer[], sortType: string) : Offer[] => {
   let result: Offer[];
   switch (sortType) {
-    case SortType.LowToHigh:
+    case SortTypes.LowToHigh:
       result = offers.sort(sortLowToHigh);
       break;
-    case SortType.HighToLow:
+    case SortTypes.HighToLow:
       result = offers.sort(sortHighToLow);
       break;
-    case SortType.TopRated:
+    case SortTypes.TopRated:
       result = offers.sort(sortTopRated);
       break;
     default:
@@ -25,3 +25,16 @@ export const getSortedOffers = (offers: Offer[], sortType: string) : Offer[] => 
   return result;
 };
 
+export const formatDateToMonthYear = (date: string) : string => (
+  new Date(date).toLocaleDateString(
+    'en-US',
+    {
+      year: 'numeric',
+      month: 'long'
+    }
+  )
+);
+
+export const getDateFromISOString = (dateTime: string): string => dateTime.split('T')[0];
+
+export const getRatingInPercent = (rating: number): string => `${rating * 20}%`;

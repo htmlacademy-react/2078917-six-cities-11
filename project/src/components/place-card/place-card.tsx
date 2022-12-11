@@ -38,11 +38,16 @@ function PlaceCard({ offer, setActiveCard, mode }: PlaceCardProps): JSX.Element 
         </div> }
       <div className={`place-card__image-wrapper ${
         (() => {
+          let result = '';
           switch (mode) {
-            case PlaceCardModes.City: return 'cities__image-wrapper';
-            case PlaceCardModes.Property: return 'near-places__image-wrapper';
-            default: return '';
+            case PlaceCardModes.City:
+              result = 'cities__image-wrapper';
+              break;
+            case PlaceCardModes.Property:
+              result = 'near-places__image-wrapper';
+              break;
           }
+          return result;
         })()
       }`}
       >
