@@ -16,7 +16,7 @@ export enum PlaceCardModes {
   Property = 'PROPERTY'
 }
 
-export enum CityType {
+export enum Cities {
   Paris = 'Paris',
   Cologne = 'Cologne',
   Brussels = 'Brussels',
@@ -25,7 +25,7 @@ export enum CityType {
   Dusseldorf = 'Dusseldorf'
 }
 
-export enum SortType {
+export enum SortTypes {
   Popular = 'Popular',
   LowToHigh = 'Price: low to high',
   HighToLow = 'Price: high to low',

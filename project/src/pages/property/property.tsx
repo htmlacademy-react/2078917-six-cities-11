@@ -7,6 +7,7 @@ import Map from '../../components/map/map';
 import { useState} from 'react';
 import PlacesList from '../../components/places-list/places-list';
 import { PlaceCardModes } from '../../constants';
+import { getRatingInPercent } from '../../utils';
 
 type OfferProps = {
   offers: Offer[];
@@ -16,7 +17,6 @@ function Property({ offers }: OfferProps): JSX.Element {
   const params = useParams();
   const offer = (offers.find((item) => item.id === Number.parseInt(params.id as string, 10))) as Offer;
   const { images, isPremium, title, type, rating, price, bedrooms, maxAdults, facilities, reviews, host, description } = offer;
-
   const [activeCard, setActiveCard] = useState<Offer | null>(null);
 
   return (
@@ -85,7 +85,7 @@ function Property({ offers }: OfferProps): JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{ width: `${rating * 20}%` }}></span>
+                  <span style={{ width: getRatingInPercent(rating) }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>

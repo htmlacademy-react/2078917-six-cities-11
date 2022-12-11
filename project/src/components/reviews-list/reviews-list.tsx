@@ -1,4 +1,5 @@
 import { Review } from '../../types/offer';
+import { formatDateToMonthYear, getDateFromISOString } from '../../utils';
 import CommentForm from '../comment-form/comment-form';
 
 type ReviewsListProps = {
@@ -43,9 +44,9 @@ function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
                   </p>
                   <time
                     className="reviews__time"
-                    dateTime={date.split('T')[0]}
+                    dateTime={getDateFromISOString(date)}
                   >
-                    {new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
+                    {formatDateToMonthYear(date)}
                   </time>
                 </div>
               </li>

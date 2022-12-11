@@ -1,9 +1,9 @@
-import { CityType } from '../../constants';
+import { Cities } from '../../constants';
 import CityItem from '../city-item/city-item';
 
 
 function CitiesList(): JSX.Element {
-  const cities = Array.from(Object.values(CityType));
+  const cities = Array.from(Object.values(Cities));
   return (
     <div className="tabs">
       <section className="locations container">

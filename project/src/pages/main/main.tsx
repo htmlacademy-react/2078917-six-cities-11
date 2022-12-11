@@ -8,15 +8,16 @@ import { PlaceCardModes } from '../../constants';
 import { useAppSelector } from '../../hooks';
 import CitiesList from '../../components/cities-list/cities-list';
 import { getSortedOffers } from '../../utils';
-import { SortType } from '../../constants';
+import { SortTypes } from '../../constants';
 import SortList from '../../components/sorts-list/sorts-list';
 
 function Main(): JSX.Element {
   const [activeCard, setActiveCard] = useState<Offer|null>(null);
-  const [activeSortOption, setActiveSortOption] = useState<string>(SortType.Popular);
+  const [activeSortOption, setActiveSortOption] = useState<string>(SortTypes.Popular);
   const city = useAppSelector((state) => state.cityName);
   const currentOffers = useAppSelector((state) => state.offers).filter((offer) => offer.city.name === city);
   const sortedOffers = getSortedOffers(currentOffers, activeSortOption);
+  const favoriteOffers = useAppSelector((state) => state.offers).filter((offer) => offer.isFavorite);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -32,7 +33,7 @@ function Main(): JSX.Element {
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{favoriteOffers.length}</span>
                   </a>
                 </li>
                 <li className="header__nav-item">

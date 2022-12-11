@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { setCity } from '../actions/action';
 import { offers } from '../../mocks/offers';
 import { Offer } from '../../types/offer';
-import { CityType } from '../../constants';
+import { Cities } from '../../constants';
 
 type initialStateProps = {
   cityName: string;
@@ -10,7 +10,7 @@ type initialStateProps = {
 };
 
 const initialState: initialStateProps = {
-  cityName: CityType.Paris,
+  cityName: Cities.Paris,
   offers: offers
 };
 
