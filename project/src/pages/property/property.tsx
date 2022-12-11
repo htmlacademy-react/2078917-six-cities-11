@@ -2,22 +2,20 @@ import { useParams } from 'react-router';
 import { Offer } from '../../types/offer';
 import Logo from '../../components/logo/logo';
 import ReviewsList from '../../components/reviews-list/reviews-list';
-import { offersNearby } from '../../mocks/offers';
 import Map from '../../components/map/map';
 import { useState} from 'react';
 import PlacesList from '../../components/places-list/places-list';
 import { PlaceCardModes } from '../../constants';
 import { getRatingInPercent } from '../../utils';
+import { useAppSelector } from '../../hooks/index';
 
-type OfferProps = {
-  offers: Offer[];
-};
-
-function Property({ offers }: OfferProps): JSX.Element {
+function Property(): JSX.Element {
   const params = useParams();
+  const offers = useAppSelector((state) => state.offers);
   const offer = (offers.find((item) => item.id === Number.parseInt(params.id as string, 10))) as Offer;
-  const { images, isPremium, title, type, rating, price, bedrooms, maxAdults, facilities, reviews, host, description } = offer;
+  const { images, isPremium, title, type, rating, price, bedrooms, maxAdults, goods, host, description } = offer;
   const [activeCard, setActiveCard] = useState<Offer | null>(null);
+  const offersNearby = useAppSelector((state) => state.offers).slice(0, 3);
 
   return (
     <div className="page">
@@ -108,7 +106,7 @@ function Property({ offers }: OfferProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {facilities.map((facility)=>
+                  {goods.map((facility) =>
                     (
                       <li
                         key={facility}
@@ -145,14 +143,16 @@ function Property({ offers }: OfferProps): JSX.Element {
                   </p>
                 </div>
               </div>
-              <ReviewsList reviews={reviews}/>
+              <ReviewsList reviews={[]}/>
             </div>
           </div>
           <section className="property__map map">
+            {offersNearby[0]?.city &&
             <Map
               offers={offersNearby}
               activeOffer={activeCard}
-            />
+              city={offersNearby[0].city}
+            />}
           </section>
         </section>
         <div className="container">

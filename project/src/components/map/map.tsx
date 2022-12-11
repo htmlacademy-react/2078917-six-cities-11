@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker } from 'leaflet';
 import useMap from '../../hooks/use-map';
-import { Offer } from '../../types/offer';
+import { Offer, City } from '../../types/offer';
 import 'leaflet/dist/leaflet.css';
 
 
@@ -20,20 +20,21 @@ const currentCustomIcon = new Icon({
 type MapProps = {
   offers: Offer[];
   activeOffer: Offer | null;
+  city: City;
 };
 
-function Map({ offers, activeOffer }: MapProps): JSX.Element {
+function Map({ offers, activeOffer, city }: MapProps): JSX.Element {
 
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const map = useMap(mapRef, offers[0].city);
+  const map = useMap(mapRef, city);
 
   useEffect(() => {
     const markersList: Marker[] = [];
     if (map) {
       offers.forEach((offer) => {
         const marker = new Marker({
-          lat: offer.location.lat,
-          lng: offer.location.lng
+          lat: offer.location.latitude,
+          lng: offer.location.longitude
         });
 
         marker
@@ -49,7 +50,7 @@ function Map({ offers, activeOffer }: MapProps): JSX.Element {
     return () => {
       markersList.forEach((marker) => map?.removeLayer(marker));
     };
-  }, [map, offers, activeOffer]);
+  }, [offers, activeOffer, map]);
 
   return <div style={{ height: '100%' }} ref={mapRef}></div>;
 }

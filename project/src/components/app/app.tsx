@@ -7,17 +7,26 @@ import Favorites from '../../pages/favorites/favorites';
 import Property from '../../pages/property/property';
 import { AppRoutes, AuthorizationStatuses } from '../../constants';
 import PrivateRoute from '../../components/private-route/private-route';
-import { offers } from '../../mocks/offers';
-import MainPage from '../../pages/main/main';
+import Main from '../../pages/main/main';
+import { useAppSelector } from '../../hooks';
+import Load from '../../pages/load/load';
 
 function App(): JSX.Element {
+  const isOffersLoaded = useAppSelector((state) => state.isOffersLoaded);
+
+  if (isOffersLoaded) {
+    return (
+      <Load />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoutes.Root}
           element={
-            <MainPage />
+            <Main />
           }
         />
         <Route
@@ -37,9 +46,7 @@ function App(): JSX.Element {
         <Route
           path={AppRoutes.Offer}
           element={
-            <Property
-              offers={offers}
-            />
+            <Property />
           }
         />
         <Route
