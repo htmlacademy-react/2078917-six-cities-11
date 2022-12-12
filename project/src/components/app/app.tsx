@@ -9,14 +9,14 @@ import { AppRoutes, AuthorizationStatuses } from '../../constants';
 import PrivateRoute from '../../components/private-route/private-route';
 import Main from '../../pages/main/main';
 import { useAppSelector } from '../../hooks';
-import Load from '../../pages/load/load';
+import Loader from '../loader/loader';
 
 function App(): JSX.Element {
   const isOffersLoaded = useAppSelector((state) => state.isOffersLoaded);
 
   if (isOffersLoaded) {
     return (
-      <Load />
+      <Loader />
     );
   }
 

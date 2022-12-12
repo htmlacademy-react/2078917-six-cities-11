@@ -32,7 +32,7 @@ export enum SortTypes {
   TopRated = 'Top rated first',
 }
 
-export enum APIRoute {
+export enum APIRoutes {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',

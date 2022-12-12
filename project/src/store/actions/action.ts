@@ -3,6 +3,6 @@ import { Offer } from '../../types/offer';
 
 export const setCity = createAction<string>('main/setCity');
 
-export const loadOffers = createAction<Offer[]>('main/loadOffers');
+export const setOffers = createAction<Offer[]>('main/setOffers');
 
 export const setOffersLoadStatus = createAction<boolean>('main/setOffersLoadStatus');

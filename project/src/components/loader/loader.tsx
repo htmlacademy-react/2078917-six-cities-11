@@ -1,4 +1,4 @@
-export default function Load(): JSX.Element {
+export default function Loader(): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
