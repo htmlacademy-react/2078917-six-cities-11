@@ -4,6 +4,7 @@ import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { fetchOffersAction } from './store/actions/api';
+import Error from './components/error/error';
 
 store.dispatch(fetchOffersAction());
 
@@ -14,6 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <Error />
       <App />
     </Provider>
   </React.StrictMode>
