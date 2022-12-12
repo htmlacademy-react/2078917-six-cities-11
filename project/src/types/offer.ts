@@ -15,8 +15,8 @@ export type Review = {
 };
 
 export type Point = {
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
   zoom: number;
 }
 
@@ -38,7 +38,7 @@ export type Offer = {
   maxAdults: number;
   price: number;
   host: Host;
-  facilities: string[];
+  goods: string[];
   reviews: Review[];
   location: Point;
   city: City;

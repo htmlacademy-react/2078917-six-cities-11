@@ -71,8 +71,9 @@ function Main(): JSX.Element {
               <section className="cities__map map">
                 {currentOffers.length > 0 &&
                   <Map
-                    offers={sortedOffers}
+                    offers={currentOffers}
                     activeOffer={activeCard}
+                    city={currentOffers[0].city}
                   />}
               </section>
             </div>

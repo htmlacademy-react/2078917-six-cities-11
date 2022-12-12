@@ -1,6 +1,7 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { PlaceCardModes } from '../../constants';
+import cn from 'classnames';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -36,20 +37,10 @@ function PlaceCard({ offer, setActiveCard, mode }: PlaceCardProps): JSX.Element 
         <div className="place-card__mark">
           <span>Premium</span>
         </div> }
-      <div className={`place-card__image-wrapper ${
-        (() => {
-          let result = '';
-          switch (mode) {
-            case PlaceCardModes.City:
-              result = 'cities__image-wrapper';
-              break;
-            case PlaceCardModes.Property:
-              result = 'near-places__image-wrapper';
-              break;
-          }
-          return result;
-        })()
-      }`}
+      <div className={cn('place-card__image-wrapper', {
+        'cities__image-wrapper': mode === PlaceCardModes.City,
+        'near-places__image-wrapper': mode === PlaceCardModes.Property
+      })}
       >
         <Link to={`/offer/${id}`}>
           <img
