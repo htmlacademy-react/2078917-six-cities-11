@@ -2,7 +2,8 @@ export enum AppRoutes {
   Root = '/',
   Login = '/Login',
   Favorites = '/Favorites',
-  Offer = '/offer/:id'
+  Offer = '/offer/:id',
+  NotFound = '*',
 }
 
 export enum AuthorizationStatuses {
@@ -36,4 +37,14 @@ export enum APIRoutes {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Favorite = '/favorite'
 }
+
+export enum StatusCodes {
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404
+}
+
+export const TIMEOUT_ERROR = 2000;
+export const TIMEOUT_PASSWORD_ERROR = 3000;

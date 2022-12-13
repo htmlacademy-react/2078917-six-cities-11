@@ -5,16 +5,17 @@ import NotFound from '../../pages/not-found/not-found';
 import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
 import Property from '../../pages/property/property';
-import { AppRoutes, AuthorizationStatuses } from '../../constants';
+import { AppRoutes } from '../../constants';
 import PrivateRoute from '../../components/private-route/private-route';
 import Main from '../../pages/main/main';
 import { useAppSelector } from '../../hooks';
 import Loader from '../loader/loader';
 
 function App(): JSX.Element {
+  const authorizationStatuses = useAppSelector((state) => state.authorizationStatus);
   const isOffersLoaded = useAppSelector((state) => state.isOffersLoaded);
 
-  if (isOffersLoaded) {
+  if (!isOffersLoaded) {
     return (
       <Loader />
     );
@@ -37,7 +38,7 @@ function App(): JSX.Element {
           path={AppRoutes.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatuses.Auth}
+              authorizationStatus={authorizationStatuses}
             >
               <Favorites />
             </PrivateRoute>
