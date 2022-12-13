@@ -1,4 +1,4 @@
-type Host = {
+export type User = {
   id: number;
   avatarUrl: string;
   name: string;
@@ -37,7 +37,7 @@ export type Offer = {
   bedrooms: number;
   maxAdults: number;
   price: number;
-  host: Host;
+  host: User;
   goods: string[];
   reviews: Review[];
   location: Point;

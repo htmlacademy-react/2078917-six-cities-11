@@ -1,5 +1,7 @@
 import { SortTypes } from './constants';
 import { Offer } from './types/offer';
+import dayjs from 'dayjs';
+import { Review } from './types/offer';
 
 const sortHighToLow = (offerA: Offer, offerB: Offer) => offerB.price - offerA.price;
 
@@ -38,3 +40,5 @@ export const formatDateToMonthYear = (date: string) : string => (
 export const getDateFromISOString = (dateTime: string): string => dateTime.split('T')[0];
 
 export const getRatingInPercent = (rating: number): string => `${rating * 20}%`;
+
+export const sortReviews = (reviewA: Review, reviewB: Review) => dayjs(reviewB.date).diff(dayjs(reviewA.date))
