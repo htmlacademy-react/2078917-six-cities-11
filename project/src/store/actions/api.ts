@@ -7,7 +7,7 @@ import { dropUserData, saveUserData } from '../../api/user-data';
 import { User } from '../../types/user';
 import { Auth } from '../../types/auth';
 import { store } from '../index';
-import { setOffers, setOffersLoadStatus, setError, setAuthorizationStatus } from './action';
+import { setOffers, setOffersLoadStatus, setError, setAuthorizationStatus, setFavorites, setFavoritesLoadStatus } from './action';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -17,11 +17,26 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   'data/fetchOffers',
   async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<Offer[]>(APIRoutes.Offers);
-    dispatch(setOffersLoadStatus(true));
-    dispatch(setOffers(data));
     dispatch(setOffersLoadStatus(false));
+    dispatch(setOffers(data));
+    dispatch(setOffersLoadStatus(true));
   }
 );
+
+export const fetchFavoriteOffersAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchFavoriteOffers',
+  async (_arg, { dispatch, extra: api }) => {
+    const { data } = await api.get<Offer[]>(APIRoutes.Favorite);
+    dispatch(setFavoritesLoadStatus(false));
+    dispatch(setFavorites(data));
+    dispatch(setFavoritesLoadStatus(true));
+  }
+);
+
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -74,3 +89,4 @@ export const clearErrorAction = createAsyncThunk(
     );
   },
 );
+

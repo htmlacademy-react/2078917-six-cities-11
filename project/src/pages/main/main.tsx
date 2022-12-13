@@ -10,11 +10,11 @@ import CitiesList from '../../components/cities-list/cities-list';
 import { getSortedOffers } from '../../utils';
 import { SortTypes } from '../../constants';
 import SortList from '../../components/sorts-list/sorts-list';
-
-import { AppRoutes, AuthorizationStatuses, APIRoutes } from '../../constants';
-import { api } from '../../store';
-import { logoutAction } from '../../store/actions/api';
+import { AppRoutes, AuthorizationStatuses } from '../../constants';
 import { getUserData } from '../../api/user-data';
+import FavoriteIcon from '../../components/favorite-icon/favorite-icon';
+import { logoutAction } from '../../store/actions/api';
+import { MouseEvent } from 'react';
 
 function Main(): JSX.Element {
   const [activeCard, setActiveCard] = useState<Offer|null>(null);
@@ -23,21 +23,18 @@ function Main(): JSX.Element {
   const currentOffers = useAppSelector((state) => state.offers).filter((offer) => offer.city.name === city);
   const sortedOffers = getSortedOffers(currentOffers, activeSortOption);
 
-  const [favoriteCount, setFavoriteCount] = useState(0);
   const dispatch = useAppDispatch();
   const userData = getUserData();
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  const getFavoriteOffers = async () => {
-    const { data } = await api.get<Offer[]>(APIRoutes.Favorite);
-    setFavoriteCount(data.length);
-  };
-
+  const isFavoritesLoaded = useAppSelector((state) => state.isFavoritesLoaded);
   const isAuth = () => authorizationStatus === AuthorizationStatuses.Auth;
 
-  if (isAuth()) {
-    getFavoriteOffers();
-  }
+  const handleSignClick = (evt: MouseEvent) => {
+    evt.preventDefault();
+    dispatch(logoutAction());
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -62,7 +59,7 @@ function Main(): JSX.Element {
                       isAuth() ?
                         <>
                           <span className="header__user-name user__name">{userData.name}</span>
-                          <span className="header__favorite-count">{favoriteCount}</span>
+                          {isFavoritesLoaded && <FavoriteIcon />}
                         </> :
                         <span className="header__login">Sign in</span>
                     }
@@ -71,7 +68,11 @@ function Main(): JSX.Element {
                 {
                   isAuth() ?
                     <li className="header__nav-item">
-                      <Link className="header__nav-link" onClick={() => { dispatch(logoutAction()); }} to={AppRoutes.Login}>
+                      <Link
+                        className="header__nav-link"
+                        onClick={(evt) => handleSignClick(evt)}
+                        to={AppRoutes.Login}
+                      >
                         <span className="header__signout">Sign out</span>
                       </Link>
                     </li> : ''

@@ -1,6 +1,5 @@
 import { FormEvent, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Auth } from '../../types/auth';
 import { AppRoutes, Cities, TIMEOUT_PASSWORD_ERROR } from '../../constants';
 import { useAppDispatch } from '../../hooks';
 import { setCity } from '../../store/actions/action';
@@ -15,20 +14,16 @@ function Login(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = (authData: Auth) => {
-    dispatch(loginAction(authData));
-  };
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     setPasswordError(false);
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       if (passwordRef.current.value.length > 2) {
-        onSubmit({
+        dispatch(loginAction({
           login: loginRef.current.value,
           password: passwordRef.current.value,
-        });
+        }));
         navigate(AppRoutes.Root);
       }
 
@@ -85,7 +80,7 @@ function Login(): JSX.Element {
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
-              {isPasswordError ? <span>Поле ввода должно содержать не менее трех символов</span> : ''}
+              {isPasswordError && <span>Поле ввода должно содержать не менее трех символов</span>}
             </form>
           </section>
           <section className="locations locations--login locations--current">
@@ -93,7 +88,7 @@ function Login(): JSX.Element {
               <Link
                 className="locations__item-link"
                 to={AppRoutes.Root}
-                onClick={() => { dispatch(setCity(Cities.Amsterdam)); }}
+                onClick={() => dispatch(setCity(Cities.Amsterdam))}
               >
                 <span className="locations__item-link">Amsterdam</span>
               </Link>

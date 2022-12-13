@@ -15,7 +15,7 @@ function App(): JSX.Element {
   const authorizationStatuses = useAppSelector((state) => state.authorizationStatus);
   const isOffersLoaded = useAppSelector((state) => state.isOffersLoaded);
 
-  if (isOffersLoaded) {
+  if (!isOffersLoaded) {
     return (
       <Loader />
     );
