@@ -1,18 +1,30 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
-import { PlaceCardModes } from '../../constants';
+import { PlaceCardModes, FavoriteStatus } from '../../constants';
 import cn from 'classnames';
+import { useAppDispatch } from '../../hooks';
+import { setFavoriteStatusAction } from '../../store/actions/api';
 
 type PlaceCardProps = {
   offer: Offer;
-  setActiveCard?: React.Dispatch<React.SetStateAction<Offer | null>>;
+  setActiveCard?: ((offer: Offer | undefined) => void) | undefined;
   mode: string;
 };
 
 function PlaceCard({ offer, setActiveCard, mode }: PlaceCardProps): JSX.Element {
-  const { id, previewImage, title, type, rating, price, isPremium } = offer;
+  const { id, previewImage, title, type, rating, price, isPremium, isFavorite } = offer;
+  const dispatch = useAppDispatch();
+
+  const handleFavoriteButtonClick = () => {
+    dispatch(setFavoriteStatusAction({
+      currentId: id,
+      status: isFavorite ? FavoriteStatus.NotFavorite : FavoriteStatus.Favorite,
+    }));
+  };
+
   return (
     <article
+      id={String(id)}
       className={`place-card ${
         (()=>{
           switch (mode) {
@@ -29,7 +41,7 @@ function PlaceCard({ offer, setActiveCard, mode }: PlaceCardProps): JSX.Element 
       }}
       onMouseOut={() => {
         if (setActiveCard) {
-          setActiveCard(null);
+          setActiveCard(undefined);
         }
       }}
     >
@@ -58,7 +70,11 @@ function PlaceCard({ offer, setActiveCard, mode }: PlaceCardProps): JSX.Element 
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+          <button
+            className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`}
+            type="button"
+            onClick={handleFavoriteButtonClick}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -74,7 +90,7 @@ function PlaceCard({ offer, setActiveCard, mode }: PlaceCardProps): JSX.Element 
         <h2 className="place-card__name">
           <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{type.charAt(0).toUpperCase() + type.slice(1)}</p>
       </div>
     </article>
   );

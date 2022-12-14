@@ -1,17 +1,8 @@
-type Host = {
+export type User = {
   id: number;
   avatarUrl: string;
   name: string;
   isPro: boolean;
-};
-
-export type Review = {
-  id: number;
-  avatar: string;
-  name: string;
-  mark: number;
-  date: string;
-  text: string;
 };
 
 export type Point = {
@@ -37,9 +28,8 @@ export type Offer = {
   bedrooms: number;
   maxAdults: number;
   price: number;
-  host: Host;
+  host: User;
   goods: string[];
-  reviews: Review[];
   location: Point;
   city: City;
   previewImage: string;

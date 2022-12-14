@@ -1,8 +1,5 @@
-import { useAppSelector } from '../../hooks';
-
-export default function FavoriteIcon(): JSX.Element {
-  const favorites = useAppSelector((state) => state.favorites);
+export default function FavoriteIcon(count: number): JSX.Element {
   return (
-    <span className="header__favorite-count">{favorites.length}</span>
+    <span className="header__favorite-count">{count}</span>
   );
 }

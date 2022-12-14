@@ -1,7 +1,7 @@
 import Logo from '../../components/logo/logo';
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Map from '../../components/map/map';
 import PlacesList from '../../components/places-list/places-list';
 import { PlaceCardModes } from '../../constants';
@@ -12,22 +12,26 @@ import { SortTypes } from '../../constants';
 import SortList from '../../components/sorts-list/sorts-list';
 import { AppRoutes, AuthorizationStatuses } from '../../constants';
 import { getUserData } from '../../api/user-data';
-import FavoriteIcon from '../../components/favorite-icon/favorite-icon';
 import { logoutAction } from '../../store/actions/api';
 import { MouseEvent } from 'react';
+import { getCity } from '../../store/app-action-process/selectors';
+import { getOffers } from '../../store/data-process/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import NotAvailable from '../../components/not-available/not-available';
+import { setCity } from '../../store/actions/action';
 
 function Main(): JSX.Element {
-  const [activeCard, setActiveCard] = useState<Offer|null>(null);
-  const [activeSortOption, setActiveSortOption] = useState<string>(SortTypes.Popular);
-  const city = useAppSelector((state) => state.cityName);
-  const currentOffers = useAppSelector((state) => state.offers).filter((offer) => offer.city.name === city);
-  const sortedOffers = getSortedOffers(currentOffers, activeSortOption);
-
   const dispatch = useAppDispatch();
+  const [activeCard, setActiveCard] = useState<Offer | undefined>(undefined);
+  const [activeSortOption, setActiveSortOption] = useState<string>(SortTypes.Popular);
+  const city = useAppSelector(getCity);
+  const offers = useAppSelector(getOffers);
+  const selectCity = useCallback((cityItem: string) => dispatch(setCity(cityItem)), [dispatch]);
+  const favoriteCount = offers.filter((offer) => offer.isFavorite).length;
+  const currentOffers = offers.filter((offer) => offer.city.name === city);
+  const sortedOffers = getSortedOffers(currentOffers, activeSortOption || '');
   const userData = getUserData();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-
-  const isFavoritesLoaded = useAppSelector((state) => state.isFavoritesLoaded);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuth = () => authorizationStatus === AuthorizationStatuses.Auth;
 
   const handleSignClick = (evt: MouseEvent) => {
@@ -59,7 +63,7 @@ function Main(): JSX.Element {
                       isAuth() ?
                         <>
                           <span className="header__user-name user__name">{userData.name}</span>
-                          {isFavoritesLoaded && <FavoriteIcon />}
+                          {favoriteCount && <span className="header__favorite-count">{favoriteCount}</span>}
                         </> :
                         <span className="header__login">Sign in</span>
                     }
@@ -71,7 +75,7 @@ function Main(): JSX.Element {
                       <Link
                         className="header__nav-link"
                         onClick={(evt) => handleSignClick(evt)}
-                        to={AppRoutes.Login}
+                        to={AppRoutes.Root}
                       >
                         <span className="header__signout">Sign out</span>
                       </Link>
@@ -85,35 +89,38 @@ function Main(): JSX.Element {
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <CitiesList />
+        <CitiesList selectedCity={city} setCity={selectCity}/>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{currentOffers.length} places to stay in {city}</b>
-              <SortList
-                activeSortOption={activeSortOption}
-                setActiveSortOption={setActiveSortOption}
-              />
-              <div className='cities__places-list places__list tabs__content'>
-                <PlacesList
-                  offers={sortedOffers}
-                  setActiveCard={setActiveCard}
-                  mode={PlaceCardModes.City}
-                />
+          {
+            currentOffers.length === 0 ? < NotAvailable city={city} /> :
+              <div className="cities__places-container container">
+                <section className="cities__places places">
+                  <h2 className="visually-hidden">Places</h2>
+                  <b className="places__found">{currentOffers.length} places to stay in {city}</b>
+                  <SortList
+                    activeSortOption={activeSortOption}
+                    setActiveSortOption={setActiveSortOption}
+                  />
+                  <div className='cities__places-list places__list tabs__content'>
+                    <PlacesList
+                      offers={sortedOffers}
+                      setActiveCard={setActiveCard}
+                      mode={PlaceCardModes.City}
+                    />
+                  </div>
+                </section>
+                <div className="cities__right-section">
+                  <section className="cities__map map">
+                    {currentOffers.length > 0 &&
+                      <Map
+                        offers={currentOffers}
+                        activeOffer={activeCard}
+                        city={currentOffers[0].city}
+                      />}
+                  </section>
+                </div>
               </div>
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                {currentOffers.length > 0 &&
-                  <Map
-                    offers={currentOffers}
-                    activeOffer={activeCard}
-                    city={currentOffers[0].city}
-                  />}
-              </section>
-            </div>
-          </div>
+          }
         </div>
       </main>
     </div>

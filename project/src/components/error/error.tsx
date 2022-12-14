@@ -1,8 +1,8 @@
 import { useAppSelector } from '../../hooks';
-import './error.css';
+import '../../styles.css';
 
 function Error(): JSX.Element | null {
-  const { error } = useAppSelector((state) => state);
+  const { error } = useAppSelector((state) => state.DATA);
   return (error) ?
     <div
       className='error'
