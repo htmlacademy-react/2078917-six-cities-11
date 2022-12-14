@@ -1,21 +1,76 @@
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Offer } from '../../types/offer';
 import Logo from '../../components/logo/logo';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
 import { useState} from 'react';
 import PlacesList from '../../components/places-list/places-list';
-import { PlaceCardModes } from '../../constants';
+import { APIRoutes, AppRoutes, AuthorizationStatuses, PlaceCardModes } from '../../constants';
 import { getRatingInPercent } from '../../utils';
-import { useAppSelector } from '../../hooks/index';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
+import { Review } from '../../types/review';
+import CommentForm from '../../components/comment-form/comment-form';
+import { api } from '../../store';
+import { setError } from '../../store/actions/action';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function Property(): JSX.Element {
   const params = useParams();
-  const offers = useAppSelector((state) => state.offers);
-  const offer = (offers.find((item) => item.id === Number.parseInt(params.id as string, 10))) as Offer;
+  const id = Number(params.id);
+  const [offer, setOffer] = useState<Offer | null>(null);
+  const [nearbyOffers, setNearbyOffers] = useState<Offer[]>([]);
+  const [comments, setComments] = useState<Review[]>([]);
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isAuth = useAppSelector(getAuthorizationStatus) === AuthorizationStatuses.Auth;
+
+  let offersForMap;
+
+  const getOffer = async () => {
+    try {
+      const { data } = await api.get<Offer>(`${APIRoutes.Offers}/${id}`);
+      setOffer(data);
+    } catch (error) {
+      navigate(AppRoutes.NotFound);
+    }
+  };
+
+  const getNearbyOffers = async () => {
+    try {
+      const { data } = await api.get<Offer[]>(`${APIRoutes.Offers}/${id}/nearby`);
+      setNearbyOffers(data);
+    } catch (error) {
+      dispatch(setError('Can not find nearby offers'));
+    }
+  };
+
+  const getComments = async () => {
+    try {
+      const { data } = await api.get<Review[]>(`${APIRoutes.Comments}/${id}`);
+      setComments(data);
+    } catch (error) {
+      dispatch(setError('Can not find comments'));
+    }
+  };
+
+  if (offer === null || offer?.id !== Number(id)) {
+    getOffer();
+    getNearbyOffers();
+    getComments();
+  }
+
+  if (offer !== null) {
+    offersForMap = nearbyOffers.slice(0, 3).concat(offer);
+  }
+
+  const [offerForMap, setOfferForMap] = useState<Offer | null>(null);
+
+  /*const offers = useAppSelector((state) => state.offers);
+  const offer = (offers.find((item) => item.id === id)) as Offer;
   const { images, isPremium, title, type, rating, price, bedrooms, maxAdults, goods, host, description } = offer;
-  const [activeCard, setActiveCard] = useState<Offer | null>(null);
-  const offersNearby = useAppSelector((state) => state.offers).slice(0, 3);
+
+  const offersNearby = useAppSelector((state) => state.offers).slice(0, 3);*/
 
   return (
     <div className="page">
@@ -50,7 +105,7 @@ function Property(): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((url)=>
+              {offer?.images.slice(0, 6).map((url)=>
                 (
                   <div
                     key={url}
@@ -66,13 +121,13 @@ function Property(): JSX.Element {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {isPremium &&
+              {offer?.isPremium &&
                 <div className="property__mark">
                   <span>Premium</span>
                 </div>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {title}
+                  {offer?.title}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -83,30 +138,30 @@ function Property(): JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{ width: getRatingInPercent(rating) }}></span>
+                  <span style={{ width: offer ? getRatingInPercent(offer.rating) : '0%' }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{rating}</span>
+                <span className="property__rating-value rating__value">{offer?.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {type}
+                  {offer ? offer?.type.charAt(0).toUpperCase() + offer?.type.slice(1) : ''}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {bedrooms}
+                  {offer?.bedrooms}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {maxAdults} adults
+                  Max {offer?.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{price}</b>
+                <b className="property__price-value">&euro;{offer?.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {goods.map((facility) =>
+                  {offer?.goods.map((facility) =>
                     (
                       <li
                         key={facility}
@@ -123,45 +178,51 @@ function Property(): JSX.Element {
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
                     <img
                       className="property__avatar user__avatar"
-                      src={host.avatarUrl}
+                      src={offer?.host.avatarUrl}
                       width="74"
                       height="74"
                       alt="Host avatar"
                     />
                   </div>
                   <span className="property__user-name">
-                    {host.name}
+                    {offer?.host.name}
                   </span>
-                  {host.isPro &&
+                  {offer?.host.isPro &&
                     <span className="property__user-status">
                       Pro
                     </span>}
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    {description}
+                    {offer?.description}
                   </p>
                 </div>
               </div>
-              <ReviewsList reviews={[]}/>
+              <section className="property__reviews reviews">
+                <ReviewsList reviews={comments}/>
+                {
+                  isAuth && <CommentForm setComments={setComments} />
+                }
+              </section>
             </div>
           </div>
           <section className="property__map map">
-            {offersNearby[0]?.city &&
-            <Map
-              offers={offersNearby}
-              activeOffer={activeCard}
-              city={offersNearby[0].city}
-            />}
+            {offersForMap && offer &&
+              <Map
+                offers={offersForMap}
+                activeOffer={offerForMap}
+                city={offersForMap[0].city}
+              />}
           </section>
         </section>
         <div className="container">
           <div className='near-places__list places__list'>
-            <PlacesList
-              offers={offersNearby}
-              setActiveCard={setActiveCard}
-              mode={PlaceCardModes.Property}
-            />
+            {nearbyOffers &&
+              <PlacesList
+                offers={nearbyOffers}
+                setActiveCard={setOfferForMap}
+                mode={PlaceCardModes.Property}
+              />}
           </div>
         </div>
       </main>

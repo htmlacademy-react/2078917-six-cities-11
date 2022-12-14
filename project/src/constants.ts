@@ -37,7 +37,8 @@ export enum APIRoutes {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
-  Favorite = '/favorite'
+  Favorite = '/favorite',
+  Comments = '/comments'
 }
 
 export enum StatusCodes {
@@ -48,3 +49,47 @@ export enum StatusCodes {
 
 export const TIMEOUT_ERROR = 2000;
 export const TIMEOUT_PASSWORD_ERROR = 3000;
+
+export const RatingData = [
+  {
+    title: 'perfect',
+    value: 5
+  },
+  {
+    title: 'good',
+    value: 4
+  },
+  {
+    title: 'not bad',
+    value: 3
+  },
+  {
+    title: 'badly',
+    value: 2
+  },
+  {
+    title: 'terribly',
+    value: 1
+  }
+];
+
+export const MAX_REVIEWS_COUNT = 10;
+export const MIN_COMMENT_LENGTH = 50;
+export const MAX_COMMENT_LENGTH = 300;
+
+export const groupBy = <T>(array: T[], predicate: (value: T, index: number, array: T[]) => string) =>
+  array.reduce((acc, value, index, arr) => {
+    (acc[predicate(value, index, arr)] ||= []).push(value);
+    return acc;
+  }, {} as { [key: string]: T[] });
+
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+  AppAction = 'APP_ACTION'
+}
+
+export enum FavoriteStatus {
+  Favorite = 1,
+  NotFavorite = 0
+}

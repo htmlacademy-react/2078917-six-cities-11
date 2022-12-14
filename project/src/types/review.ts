@@ -8,7 +8,12 @@ export type Review = {
   user: User;
 }
 
-export type ReviewData = {
+export type FormData = {
   comment: string;
   rating: number | null;
+}
+
+export type ReviewData = {
+  id: number;
+  formData: FormData;
 }

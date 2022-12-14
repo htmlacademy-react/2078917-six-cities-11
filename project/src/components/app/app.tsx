@@ -3,19 +3,21 @@ import { Route } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 import NotFound from '../../pages/not-found/not-found';
 import Login from '../../pages/login/login';
-import Favorites from '../../pages/favorites/favorites';
 import Property from '../../pages/property/property';
 import { AppRoutes } from '../../constants';
 import PrivateRoute from '../../components/private-route/private-route';
 import Main from '../../pages/main/main';
 import { useAppSelector } from '../../hooks';
 import Loader from '../loader/loader';
+import { Favorites } from '../../pages/favorites/favorites';
+import { getOffersLoadingData } from '../../store/data-process/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function App(): JSX.Element {
-  const authorizationStatuses = useAppSelector((state) => state.authorizationStatus);
-  const isOffersLoaded = useAppSelector((state) => state.isOffersLoaded);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isOffersLoading = useAppSelector(getOffersLoadingData);
 
-  if (!isOffersLoaded) {
+  if (isOffersLoading) {
     return (
       <Loader />
     );
@@ -38,7 +40,7 @@ function App(): JSX.Element {
           path={AppRoutes.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={authorizationStatuses}
+              authorizationStatus={authorizationStatus}
             >
               <Favorites />
             </PrivateRoute>

@@ -5,15 +5,6 @@ export type User = {
   isPro: boolean;
 };
 
-export type Review = {
-  id: number;
-  avatar: string;
-  name: string;
-  mark: number;
-  date: string;
-  text: string;
-};
-
 export type Point = {
   latitude: number;
   longitude: number;
@@ -39,7 +30,6 @@ export type Offer = {
   price: number;
   host: User;
   goods: string[];
-  reviews: Review[];
   location: Point;
   city: City;
   previewImage: string;

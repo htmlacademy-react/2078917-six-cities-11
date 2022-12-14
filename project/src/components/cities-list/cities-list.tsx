@@ -1,8 +1,12 @@
 import { Cities } from '../../constants';
 import CityItem from '../city-item/city-item';
 
+type CitiesListProps = {
+  selectedCity: string;
+  setCity: (city: string) => void;
+}
 
-function CitiesList(): JSX.Element {
+function CitiesList({ selectedCity, setCity }: CitiesListProps): JSX.Element {
   const cities = Array.from(Object.values(Cities));
   return (
     <div className="tabs">
@@ -12,6 +16,8 @@ function CitiesList(): JSX.Element {
             <CityItem
               key={city}
               city={city}
+              selectedCity={selectedCity}
+              setCity={setCity}
             />))}
         </ul>
       </section>

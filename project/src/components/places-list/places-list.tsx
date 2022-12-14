@@ -4,7 +4,7 @@ import PlaceCard from '../place-card/place-card';
 
 type PlacesListProps = {
   offers: Offer[];
-  setActiveCard: React.Dispatch<React.SetStateAction<Offer | null>>;
+  setActiveCard?: React.Dispatch<React.SetStateAction<Offer | null>>;
   mode: string;
 };
 
