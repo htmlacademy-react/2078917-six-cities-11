@@ -1,47 +1,43 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
-import { useParams } from 'react-router-dom';
-import { APIRoutes, MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, RatingData } from '../../constants';
-import { useAppDispatch } from '../../hooks';
-import { api } from '../../store';
-import { setError } from '../../store/actions/action';
-import { Review, FormData } from '../../types/review';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { RatingData } from '../../constants';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setCommentAction } from '../../store/actions/api';
+import { getIsCommentLoading, getIsCommentLoadSuccess } from '../../store/data-process/selectors';
+import { FormData } from '../../types/review';
 import { ReviewRatingStars } from '../review-rating-stars/review-rating-stars';
 
 type CommentFormProps = {
-  setComments: (comments: Review[]) => void;
+  id: number;
 };
 
-function CommentForm({ setComments }: CommentFormProps ): JSX.Element {
+const defaultFormData = {
+  comment: '',
+  rating: null
+};
 
-  const { id } = useParams();
-  const [formDisabled, setFormDisabled] = useState<boolean>(false);
-
-  const defaultFormData = {
-    comment: '',
-    rating: null
-  };
-
+function CommentForm({ id }: CommentFormProps ): JSX.Element {
+  const dispatch = useAppDispatch();
+  const isCommentLoading = useAppSelector(getIsCommentLoading);
+  const isCommentLoadSuccess = useAppSelector(getIsCommentLoadSuccess);
   const [formData, setFormData] = useState<FormData>(defaultFormData);
 
-  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (isCommentLoadSuccess) {
+      setFormData(defaultFormData);
+    }
+  }, [isCommentLoadSuccess]);
 
-  const handleFieldChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-    const { name, value } = evt.target;
-    setFormData({...formData, [name]: value});
+  const isValidForm = (50 < formData.comment.length && formData.comment.length < 300 && formData.rating !== null);
+  const isFormDisabled = !isValidForm || isCommentLoading;
+
+  const handleFormChange = ({ target }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+    const { name, value } = target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleFormSubmit = async (evt: FormEvent) => {
+  const handleFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-    try {
-      setFormDisabled(true);
-      const { data } = await api.post<Review[]>(`${APIRoutes.Comments}/${Number(id)}`, formData);
-      setComments(data);
-      setFormDisabled(false);
-      setFormData(defaultFormData);
-    } catch (error) {
-      dispatch(setError('Can not send your comment'));
-      setFormDisabled(false);
-    }
+    if (isValidForm) { dispatch(setCommentAction({ id, formData })); }
   };
 
   return (
@@ -62,8 +58,8 @@ function CommentForm({ setComments }: CommentFormProps ): JSX.Element {
               key={data.value}
               ratingStar={data}
               isChecked={data.value === Number(formData.rating)}
-              formDisabled={formDisabled}
-              handleFieldChange={handleFieldChange}
+              formDisabled={isCommentLoading}
+              handleFieldChange={handleFormChange}
             />
           )
           )
@@ -73,10 +69,10 @@ function CommentForm({ setComments }: CommentFormProps ): JSX.Element {
         className="reviews__textarea form__textarea"
         id="comment"
         name="comment"
-        maxLength={MAX_COMMENT_LENGTH}
+        maxLength={300}
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={handleFieldChange}
-        disabled={formDisabled}
+        onChange={handleFormChange}
+        disabled={isCommentLoading}
         value={formData.comment}
       >
       </textarea>
@@ -87,7 +83,7 @@ function CommentForm({ setComments }: CommentFormProps ): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={formData.comment.length < MIN_COMMENT_LENGTH || formData.rating === null || formDisabled}
+          disabled={isFormDisabled}
         >
           Submit
         </button>

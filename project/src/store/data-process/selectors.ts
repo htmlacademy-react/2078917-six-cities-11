@@ -11,6 +11,5 @@ const getNearbyOffers = (state: State): Offer[] => state[NameSpace.Data].nearbyO
 const getComments = (state: State): Review[] => state[NameSpace.Data].comments;
 const getIsCommentLoading = (state: State): boolean => state[NameSpace.Data].loadedState.isCommentLoading;
 const getIsCommentLoadSuccess = (state: State): boolean => state[NameSpace.Data].loadedState.isCommentLoadSuccess;
-const getFavoritesLoadingData = (state: State): boolean => !state[NameSpace.Data].loadedState.isFavoritesLoaded;
 
-export { getOffer, getOffers, getOffersLoadingData, getFavoriteOffers, getNearbyOffers, getComments, getIsCommentLoading, getIsCommentLoadSuccess, getFavoritesLoadingData };
+export { getOffer, getOffers, getOffersLoadingData, getFavoriteOffers, getNearbyOffers, getComments, getIsCommentLoading, getIsCommentLoadSuccess };

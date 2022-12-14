@@ -12,7 +12,6 @@ import { SortTypes } from '../../constants';
 import SortList from '../../components/sorts-list/sorts-list';
 import { AppRoutes, AuthorizationStatuses } from '../../constants';
 import { getUserData } from '../../api/user-data';
-import FavoriteIcon from '../../components/favorite-icon/favorite-icon';
 import { logoutAction } from '../../store/actions/api';
 import { MouseEvent } from 'react';
 import { getCity } from '../../store/app-action-process/selectors';
@@ -23,14 +22,14 @@ import { setCity } from '../../store/actions/action';
 
 function Main(): JSX.Element {
   const dispatch = useAppDispatch();
-  const [activeCard, setActiveCard] = useState<Offer|null>(null);
+  const [activeCard, setActiveCard] = useState<Offer | undefined>(undefined);
   const [activeSortOption, setActiveSortOption] = useState<string>(SortTypes.Popular);
   const city = useAppSelector(getCity);
   const offers = useAppSelector(getOffers);
   const selectCity = useCallback((cityItem: string) => dispatch(setCity(cityItem)), [dispatch]);
   const favoriteCount = offers.filter((offer) => offer.isFavorite).length;
   const currentOffers = offers.filter((offer) => offer.city.name === city);
-  const sortedOffers = getSortedOffers(currentOffers, activeSortOption);
+  const sortedOffers = getSortedOffers(currentOffers, activeSortOption || '');
   const userData = getUserData();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuth = () => authorizationStatus === AuthorizationStatuses.Auth;
@@ -64,7 +63,7 @@ function Main(): JSX.Element {
                       isAuth() ?
                         <>
                           <span className="header__user-name user__name">{userData.name}</span>
-                          {favoriteCount && <FavoriteIcon />}
+                          {favoriteCount && <span className="header__favorite-count">{favoriteCount}</span>}
                         </> :
                         <span className="header__login">Sign in</span>
                     }

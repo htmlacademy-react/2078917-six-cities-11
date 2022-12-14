@@ -1,15 +1,23 @@
-import { Fragment } from 'react';
-import { Review } from '../../types/review';
+import { Fragment, useEffect } from 'react';
 import { formatDateToMonthYear, getDateFromISOString } from '../../utils';
 import { sortReviews } from '../../utils';
-import { MAX_REVIEWS_COUNT } from '../../constants';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchCommentsAction } from '../../store/actions/api';
+import { getComments } from '../../store/data-process/selectors';
 
 type ReviewsListProps = {
-  reviews: Review[];
+  id: number;
 };
 
-function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
-  const sortedReviews = reviews.slice(0, MAX_REVIEWS_COUNT).sort(sortReviews);
+function ReviewsList({ id }: ReviewsListProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const reviews = useAppSelector(getComments);
+  const sortedReviews = reviews.slice().sort(sortReviews);
+
+  useEffect(() => {
+    dispatch(fetchCommentsAction(id));
+  }, [dispatch, id]);
+
   return (
     <Fragment>
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
@@ -17,7 +25,6 @@ function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
         {
           sortedReviews.map((review) => {
             const { comment, date, rating, user } = review;
-            const { name, avatarUrl, id } = user;
             return (
               <li
                 className="reviews__item"
@@ -27,14 +34,14 @@ function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
                   <div className="reviews__avatar-wrapper user__avatar-wrapper">
                     <img
                       className="reviews__avatar user__avatar"
-                      src={avatarUrl}
+                      src={user.avatarUrl}
                       width="54"
                       height="54"
                       alt="Reviews avatar"
                     />
                   </div>
                   <span className="reviews__user-name">
-                    {name}
+                    {user.name}
                   </span>
                 </div>
                 <div className="reviews__info">

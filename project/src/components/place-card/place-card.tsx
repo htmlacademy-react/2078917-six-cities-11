@@ -7,7 +7,7 @@ import { setFavoriteStatusAction } from '../../store/actions/api';
 
 type PlaceCardProps = {
   offer: Offer;
-  setActiveCard?: React.Dispatch<React.SetStateAction<Offer | null>>;
+  setActiveCard?: ((offer: Offer | undefined) => void) | undefined;
   mode: string;
 };
 
@@ -24,6 +24,7 @@ function PlaceCard({ offer, setActiveCard, mode }: PlaceCardProps): JSX.Element 
 
   return (
     <article
+      id={String(id)}
       className={`place-card ${
         (()=>{
           switch (mode) {
@@ -40,7 +41,7 @@ function PlaceCard({ offer, setActiveCard, mode }: PlaceCardProps): JSX.Element 
       }}
       onMouseOut={() => {
         if (setActiveCard) {
-          setActiveCard(null);
+          setActiveCard(undefined);
         }
       }}
     >
